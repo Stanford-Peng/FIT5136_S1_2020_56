@@ -1,2 +1,1 @@
-# FIT5136_S1_2020_56
-Software Engineering
+# FIT5136_S1_2020_XX-where-56
