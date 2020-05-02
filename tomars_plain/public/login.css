@@ -6,6 +6,7 @@
     margin: auto;
     padding: 10px;
     margin-top: 100px;
+    text-align: center;
   }
 
 input[type=text], input[type=password] {
@@ -17,14 +18,24 @@ input[type=text], input[type=password] {
     box-sizing: border-box;
   }
 
-button {
+Button {
+  background-color: white;
+  color:black;
+  padding: 14px 20px;
+  margin: 20px 0;
+  cursor: pointer;
+  width: 60%;
+}
+
+.positiveBtn {
     background-color: #4CAF50;
     color: white;
-    padding: 14px 20px;
-    margin: 30px 0;
     border: none;
-    cursor: pointer;
-    width: 100%;
+  }
+.negativeBtn {
+    background-color: red;
+    color: white;
+    border: none;
   }
 
 button:hover {
@@ -37,7 +48,10 @@ h3 {
     display:block;
 
 }
-  
+a {
+  display:block;
+  font-size: smaller;
+}
   
   
   
