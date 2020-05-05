@@ -1,0 +1,191 @@
+<body>
+    <template>
+    <div class="box">
+        <label for="Job Name"> Job Name: </label>
+        <input type="text" name="Job Name">
+        <label for="Job Description">Job Description: </label>
+        <textarea cols="100" rows="3" name="Job Description"> </textarea>
+        <label for="Number of Job">
+            Number:
+        </label>
+        <input type="number" name="Number of Job">
+        <button type="button" class="delete" onclick="deleteParent($(this))">x</button>
+    </div>
+    
+    </template>
+    <template>
+        <div>
+            <label for="Cargo For">For: </label>
+            <select name="Cargo For">
+                <option selected>mission</option>
+                <option>journey</option>
+                <option>mission and journey</option>
+            </select>
+            <label for="Cargo For">Cargo: </label>
+            <input type="text" name="Cargo Name">
+            <label for="Cargo For">Quantity: </label>
+            <input type="number" name="Cargo Quantity">
+            <button type="button" class="delete" onclick="deleteParent($(this))">x</button>
+        </div>
+    </template>
+
+    <div class="box">
+        <h2>Create Mission</h2>
+        <form action="/postMission" method="post">
+            <label for="Mission Name">Mission Name: </label>
+            <input type="text" name="Mission Name" required>
+
+            <label for="Country of Origin">Country of Origin</label>
+            <select name="Country of Origin" required>
+                {{> countries}}
+            </select>
+            <div>
+                <label for="Mission Description">Mission Description: </label>
+                <textarea cols="100" rows="4" name="Mission Description"
+                    placeholder="Description about this Mission"></textarea>
+            </div>
+            <div class="box">
+                <label>Countries Allowed</label>
+                <select id="countries">
+                    {{> countries}}
+                </select>
+                <button type="button" id="addCountry">Add</button>
+                {{!-- <button type="button" id="deleteCountry">Delete</button> --}}
+                <div id="allowedCountries">
+
+            </div>
+                {{!-- <textarea id="allowedCountries" cols="100" rows="1" name="Countries Allowed"
+                    placeholder="Countries Allowed: Add or Delete via buttons" readonly></textarea> --}}
+                <fieldset name="Coordinator Information">
+                    <legend>Coordinator Information: </legend>
+                    <label for="Last Name">Last Name: </label>
+                    <input type="text" name="Last Name">
+                    <label for="First Name">First Name: </label>
+                    <input type="text" name="First Name">
+                    <label for="Phone Number">Phone Number: </label>
+                    <input type="tel" name="Phone Number" pattern="[0-9]+">
+                    <label for="Contact Email">Email:</label>
+                    <input type="email" name="Contact Email">
+                </fieldset>
+                <fieldset id="jobsNeeded" name="Jobs Needed">
+                    <legend>Needed Jobs</legend>
+                    <button type="button" id="addJob">Add</button>
+                    <div class="container-box">
+                        <label for="Job Name">Job Name: </label>
+                        <input type="text" name="Job Name">
+                        <label for="Job Description">Job Description: </label>
+                        <textarea cols="100" rows="3" name="Job Description"> </textarea>
+                        <label for="Number of Job">
+                            Number:
+                        </label>
+                        <input type="number" name="Number of Job" min="1">
+                    </div>
+
+                </fieldset>
+            </div>
+            <fieldset id="cargoNeeded">
+                <legend>Cargo Requirements</legend>
+                <button type="button" id="addCargo">Add</button>
+                <div>
+                    <label for="Cargo For">For: </label>
+                    <select name="Cargo For">
+                        <option selected>mission</option>
+                        <option>journey</option>
+                        <option>mission and journey</option>
+                    </select>
+                    <label for="Cargo For">Cargo: </label>
+                    <input type="text" name="Cargo Name">
+                    <label for="Cargo For">Quantity: </label>
+                    <input type="number" name="Cargo Quantity" min="1">
+                </div>
+            </fieldset>
+            <label for="Launch Date">Launch Date</label>
+            <input type="date" name="Launch Date">
+            <label for="Mission Duration">Duration of Mission(year)</label>
+            <input type="number" name="Mission Duration" min="1">
+            <label for="Mission Status">Mission Status</label>
+            <select name="Mission Status">
+                <option selected>Planning phase</option>
+                <option>Departed Earth</option>
+                <option>Planning phase</option>
+                <option>Planning phase</option>
+                <option>Planning phase</option>
+                <option>Planning phase</option>
+            </select>
+            <Button type="submit">Create</Button>
+        </form>
+    </div>
+    <style>
+        .box {
+            border-radius: 10px;
+            border-width: 1px;
+            border-style: solid;
+            padding: 10px;
+            margin: 20px;
+        }
+        .delete{
+            background-color: red;
+            color:white;
+
+        }
+
+        .container-box{
+
+        }
+
+    </style>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    var countries=[];
+    $("#addCountry").click(function () {
+
+        var allowedCountries = $("#allowedCountries")//.children().toString();
+    
+        var countrySelected = $("#countries option:selected").text();
+        var added = $("<input name='Countries Allowed'>").val(countrySelected).add($('<button type="button" class="delete" onclick="deleteCountry($(this))">x</button>'));        
+        if (countries.includes(countrySelected)) {
+            alert("The selected country is already added")
+        } else {
+            $("#allowedCountries").append(added);
+            countries.push(countrySelected);
+
+        }
+        console.log(countries);
+    });
+
+
+
+    function deleteCountry(self) {
+        //console.log(countries);
+        var allowedCountries = $("#allowedCountries");
+        countries = countries.filter(function (val, index, arr) {
+            if (val != self.prev().val())
+                return val;
+        });
+        self.prev().remove();
+        self.remove();
+        };
+    function deleteParent(self){
+        self.parent().remove();
+    }
+    
+
+    $("#addJob").click(function () {
+        var jobsNeeded = $("#jobsNeeded");
+        var temp = $("template")[0];
+        console.log(temp.content);
+        jobsNeeded.append(temp.content.cloneNode(true));
+    })
+
+    $("#addCargo").click(function(){
+        var cargoNeeded = $("#cargoNeeded");
+        var temp = $("template")[1];
+        console.log(temp.content);
+        cargoNeeded.append(temp.content.cloneNode(true));
+        
+    })
+
+
+
+    </script>

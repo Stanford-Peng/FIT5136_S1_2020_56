@@ -45,7 +45,7 @@ app.get("/coordinator", function (req, res){
 })
 
 app.post("/adminLogin", function(req,res){
-    console.log(req.body);
+    //console.log(req.body);
     var username=req.body['username'];
     var password=req.body['password'];
     if (username=="admin" && password=="admin")
@@ -63,7 +63,7 @@ app.post("/adminLogin", function(req,res){
 })
 
 app.post("/coordinatorLogin", function(req,res){
-    console.log(req.body);
+    //console.log(req.body);
     var username=req.body['username'];
     var password=req.body['password'];
     if (username=="coordinator" && password=="coordinator")
@@ -113,6 +113,18 @@ app.get("/coordinatorLogout",function(req,res){
     } else {
         res.send("You have already logged out, <a href='/coordinator'>Click to go to log in</a>")
     }
+})
+
+app.get("/createMission",function(req,res){
+    if(!req.session["coordinator"]){
+        res.redirect("/coordinatorLogin");
+    } else {
+        res.render("createMission",{layout:false});
+    }
+})
+
+app.post("/postMission", function(req,res){
+    console.log(req.body);
 })
 
 
