@@ -102,24 +102,37 @@ app.get("/coordinatorHome", function(req,res){
         res.redirect("/coordinator");
     } else {
         var missions=[];
-        var readInterface = readline.createInterface({
-            input: fs.createReadStream('./missionData.txt'),            
-            output: process.stdout,
-            console: false
-        });
+        // var readInterface = readline.createInterface({
+        //     input: fs.createReadStream('./missionData.txt'),            
+        //     output: process.stdout,
+        //     console: false
+        // });
+        var data = fs.readFileSync("./missionData.txt", "utf-8").split("\n");
+        console.log(data);
+        for (item of data)
+        {           
+            if(item[0]=="{"){
+            var mission=JSON.parse(item);
+            console.log(mission);
+            missions.push(mission);
+            }
+        };
+          ;
 
-        readInterface.on('line', function(line) {
-            console.log(line);
-            console.log(typeof(line));
-            missions.push(JSON.parse(line));
-        });
+        // readInterface.on('line', function(line) {
+        //     //console.log(line);
+        //     //console.log(typeof(line));
+        //     missions.push(JSON.parse(line));
+        //     //console.log(missions);
 
-        //fs.close();
+        // });
+
+        //fs.close(fd file descriptor);
+        //console.log(readInterface);
         //readInterface.close();
         console.log(missions);
         res.render("coordinatorHome",{layout:"coordinatorBar", 'missions':missions}
-        );
-        
+        );        
         
     // console.log(req.session["admin"]);
     // console.log(req.session["coordinator"]);
@@ -155,9 +168,31 @@ app.post("/postMission", function(req,res){
             res.send("Created Successfully, <a href='/coordinatorHome'>Click to go to the homepage</a>");
         }
         ;    
-    }
+    }    
     )
 })
+
+app.get("/mission/:missionName", function (req, res) {
+    console.log(req.params["missionName"]);
+    if (!req.session["coordinator"]) {
+        res.redirect("/coordinator");
+    } else {
+        var mission;
+        var data = fs.readFileSync("./missionData.txt", "utf-8").split("\n");
+        console.log(data);
+        for (item of data) {
+            if (item[0] == "{") {
+                if (JSON.parse(item).missionName = req.params["missionName"]) {
+                    mission = JSON.parse(item)
+                }
+            }
+        };
+        console.log(mission);
+        res.send(mission);
+    }
+
+}
+)
 
 
 app.listen(8000, function(){
