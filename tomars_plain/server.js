@@ -2,6 +2,8 @@ const express = require('express');
 const path = require("path");
 const handlebars = require("express-handlebars");
 const bodyParser = require("body-parser");
+const fs = require("fs");
+const readline = require("readline");
 //const multer = require('multer');
 var session = require("express-session");
 const app= express();
@@ -11,7 +13,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.engine("handlebars",handlebars());
 app.set("view engine", 'handlebars');
 app.set('views', path.join(__dirname,'views'));
-//app.use(bodyParser.json())
+app.use(bodyParser.json())
 app.use(session({
     secret:"secret code",
     resave: true,
@@ -97,14 +99,32 @@ app.get("/adminHome", function(req,res){
 
 app.get("/coordinatorHome", function(req,res){
     if(!req.session["coordinator"]){
-        res.redirect("/coordinatorLogin");
+        res.redirect("/coordinator");
     } else {
-        res.render("coordinatorHome",{layout:"coordinatorBar"});
-    }
+        var missions=[];
+        var readInterface = readline.createInterface({
+            input: fs.createReadStream('./missionData.txt'),            
+            output: process.stdout,
+            console: false
+        });
+
+        readInterface.on('line', function(line) {
+            console.log(line);
+            console.log(typeof(line));
+            missions.push(JSON.parse(line));
+        });
+
+        //fs.close();
+        //readInterface.close();
+        console.log(missions);
+        res.render("coordinatorHome",{layout:"coordinatorBar", 'missions':missions}
+        );
+        
+        
     // console.log(req.session["admin"]);
     // console.log(req.session["coordinator"]);
     // console.log(req.session["id"]);
-})
+}})
 
 app.get("/coordinatorLogout",function(req,res){
     if(req.session["coordinator"]){
@@ -117,19 +137,33 @@ app.get("/coordinatorLogout",function(req,res){
 
 app.get("/createMission",function(req,res){
     if(!req.session["coordinator"]){
-        res.redirect("/coordinatorLogin");
+        res.redirect("/coordinator");
     } else {
-        res.render("createMission",{layout:false});
+        res.render("createMission",{"layout":"createMissionBar"});
     }
 })
 
 app.post("/postMission", function(req,res){
-    console.log(req.body);
+    console.log(typeof(req.body));
+    var jsonContent = JSON.stringify(req.body)+"\n";
+    fs.appendFile("missionData.txt",jsonContent, 'utf8', function (err) {
+        if (err) {
+            console.log("An error occurred while writing JSON Object to File.");
+            return console.log(err);
+            res.send("Sorry, the mission cannot be created, <a href='/coordinatorHome'>Click to go to the homepage</a>");
+        } else {
+            res.send("Created Successfully, <a href='/coordinatorHome'>Click to go to the homepage</a>");
+        }
+        ;    
+    }
+    )
 })
 
 
 app.listen(8000, function(){
     console.log("Listening on port 8000");
 })
+
+
 
 

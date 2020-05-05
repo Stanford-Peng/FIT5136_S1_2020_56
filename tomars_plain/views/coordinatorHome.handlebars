@@ -3,7 +3,11 @@
     <button class="positiveBtn" onclick="location.href='/createMission';" >Create a Mission</button>
     <button class="negativeBtn" onclick="location.href='/coordinatorLogout';">Log out</button>
   </div>
-  
+  {{#each missions}}
+    <div>
+      {{this.missionName}}
+    </div>
+  {{/each}}
   <div id="missionList">
     
   </div>
