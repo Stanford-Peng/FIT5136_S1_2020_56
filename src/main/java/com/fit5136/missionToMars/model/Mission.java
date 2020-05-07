@@ -1,107 +1,151 @@
-package main.java.com.fit5136.missionToMars.model;
+package com.fit5136.missionToMars.model;
 
-import com.fit5136.missionToMars.model.Cargo;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 public class Mission {
-    private final int id;
-    private final Date launchDate;
-    private final String origin;
-    private final int duration;
-    private final String[] type;
-    private final String desc;
-    private final String empReq;
-    private final int[] age;
-    private final int minWorkExp;
-    private final String qualification;
-    private final String occupation;
-    private final String minComputerSkill;
-    private final String language;
-    private final String[] SecLanguage;
-    private final String cargoFor;
-    private final Cargo[] cargos;
+    private final long id;
+    private String missionName;
+    private String missionDesc;
+    private String origin;
+    private String[] allowedCountries;
+    private Coordinator coordinator;
+    private HashMap<String, String> jobs;
+    private Date launchDate;
+    private int duration;
+    private String cargoFor;
+    private HashMap<String, String> empReq;
+    private String status;
+    private List<Candidate> candidates;
+    private Shuttle shuttle;
 
-    public int getId() {
+    public Mission(long id, String missionName, String missionDesc, String origin,
+                   String[] allowedCountries, Coordinator coordinator, HashMap<String, String> jobs,
+                   Date launchDate, int duration, String cargoFor, HashMap<String, String> empReq,
+                   String status, List<Candidate> candidates, Shuttle shuttle) {
+        this.id = id;
+        this.missionName = missionName;
+        this.missionDesc = missionDesc;
+        this.origin = origin;
+        this.allowedCountries = allowedCountries;
+        this.coordinator = coordinator;
+        this.jobs = jobs;
+        this.launchDate = launchDate;
+        this.duration = duration;
+        this.cargoFor = cargoFor;
+        this.empReq = empReq;
+        this.status = status;
+        this.candidates = candidates;
+        this.shuttle = shuttle;
+    }
+
+    public List<Candidate> getCandidates() {
+        return candidates;
+    }
+
+    public void setCandidates(List<Candidate> candidates) {
+        this.candidates = candidates;
+    }
+
+    public Shuttle getShuttle() {
+        return shuttle;
+    }
+
+    public void setShuttle(Shuttle shuttle) {
+        this.shuttle = shuttle;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public Date getLaunchDate() {
-        return launchDate;
+    public String getMissionName() {
+        return missionName;
+    }
+
+    public void setMissionName(String missionName) {
+        this.missionName = missionName;
+    }
+
+    public String getMissionDesc() {
+        return missionDesc;
+    }
+
+    public void setMissionDesc(String missionDesc) {
+        this.missionDesc = missionDesc;
     }
 
     public String getOrigin() {
         return origin;
     }
 
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public String[] getAllowedCountries() {
+        return allowedCountries;
+    }
+
+    public void setAllowedCountries(String[] allowedCountries) {
+        this.allowedCountries = allowedCountries;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Coordinator getCoordinator() {
+        return coordinator;
+    }
+
+    public void setCoordinator(Coordinator coordinator) {
+        this.coordinator = coordinator;
+    }
+
+    public HashMap<String, String> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(HashMap<String, String> jobs) {
+        this.jobs = jobs;
+    }
+
+    public Date getLaunchDate() {
+        return launchDate;
+    }
+
+    public void setLaunchDate(Date launchDate) {
+        this.launchDate = launchDate;
+    }
+
     public int getDuration() {
         return duration;
     }
 
-    public String[] getType() {
-        return type;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public String getEmpReq() {
-        return empReq;
-    }
-
-    public int[] getAge() {
-        return age;
-    }
-
-    public int getMinWorkExp() {
-        return minWorkExp;
-    }
-
-    public String getQualification() {
-        return qualification;
-    }
-
-    public String getOccupation() {
-        return occupation;
-    }
-
-    public String getMinComputerSkill() {
-        return minComputerSkill;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public String[] getSecLanguage() {
-        return SecLanguage;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public String getCargoFor() {
         return cargoFor;
     }
 
-    public Cargo[] getCargos() {
-        return cargos;
+    public void setCargoFor(String cargoFor) {
+        this.cargoFor = cargoFor;
     }
 
-    public Mission(int id, Date launchDate, String origin, int duration, String[] type, String desc, String empReq, int[] age, int minWorkExp, String qualification, String occupation, String minComputerSkill, String language, String[] secLanguage, String cargoFor, Cargo[] cargos) {
-        this.id = id;
-        this.launchDate = launchDate;
-        this.origin = origin;
-        this.duration = duration;
-        this.type = type;
-        this.desc = desc;
+    public HashMap<String, String> getEmpReq() {
+        return empReq;
+    }
+
+    public void setEmpReq(HashMap<String, String> empReq) {
         this.empReq = empReq;
-        this.age = age;
-        this.minWorkExp = minWorkExp;
-        this.qualification = qualification;
-        this.occupation = occupation;
-        this.minComputerSkill = minComputerSkill;
-        this.language = language;
-        SecLanguage = secLanguage;
-        this.cargoFor = cargoFor;
-        this.cargos = cargos;
     }
 }

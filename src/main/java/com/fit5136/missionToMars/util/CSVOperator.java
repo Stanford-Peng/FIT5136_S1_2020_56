@@ -1,4 +1,4 @@
-package com.fit5136.missionToMars.dao;
+package com.fit5136.missionToMars.util;
 
 import com.opencsv.*;
 
@@ -17,7 +17,7 @@ import java.util.List;
 
 
 public class CSVOperator {
-    public static List<String[]> readAll(String fileName){
+    public static List<String[]> readAll(String fileName, int escape){
         List<String[]> list = new ArrayList<>();
 
         try {
@@ -29,7 +29,7 @@ public class CSVOperator {
                     .build();
 
             CSVReader csvReader = new CSVReaderBuilder(reader)
-                    .withSkipLines(1)
+                    .withSkipLines(escape)
                     .withCSVParser(parser)
                     .build();
 
@@ -45,23 +45,6 @@ public class CSVOperator {
     }
 
 
-    public static void append(String filename, String[] args){
-
-        try{
-            Path path = Paths.get(
-                    ClassLoader.getSystemResource(filename).toURI());
-            CSVWriter writer = new CSVWriter(new FileWriter(path.toString()));
-
-            writer.writeNext(args);
-
-            writer.flush();
-            writer.close();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-
-    }
 
     public static void write(String filename, List<String[]> list){
         try {

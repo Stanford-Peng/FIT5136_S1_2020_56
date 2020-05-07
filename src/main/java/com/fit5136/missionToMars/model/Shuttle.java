@@ -3,7 +3,7 @@ package com.fit5136.missionToMars.model;
 import java.util.Date;
 
 public class Shuttle {
-    private final int id;
+    private final long id;
     private final String name;
     private final Date manufactureYear;
     private final int fuelCap;
@@ -12,7 +12,7 @@ public class Shuttle {
     private final int speed;
     private final String origin;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -44,7 +44,7 @@ public class Shuttle {
         return origin;
     }
 
-    public Shuttle(int id, String name, Date manufactureYear, int fuelCap, int passengerCap, int cargoCap, int speed, String origin) {
+    public Shuttle(long id, String name, Date manufactureYear, int fuelCap, int passengerCap, int cargoCap, int speed, String origin) {
         this.id = id;
         this.name = name;
         this.manufactureYear = manufactureYear;
