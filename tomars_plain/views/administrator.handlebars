@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Administrator Log in</title>   
+    <link rel="stylesheet" type="text/css" href="public/login.css">
+</head>
+
+<body>
+
+    <div id="login">
+        <h3>Administrator</h3>
+        <form  method="post" action="/adminLogin">           
+            <label for="username"><b>Username: </b></label> 
+            <input type="text" name="username" placeholder="login">
+                                    
+            <label for="password"><b>Password: </b></label> 
+            <input type="password" name="password" placeholder="password">
+            
+            <button class="positiveBtn" type="submit">Log in</button>            
+        </form>
+        <button class="negativeBtn" onclick="location.href='/'">Back to Login Portal</button>      
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+        
+    </script>
+
+</body>
+
+</html>
