@@ -13,7 +13,7 @@ public interface MissionDao {
     Optional<Mission> findById(long id);
     int updateById(long id, Mission mission);
     int deleteById(long id);
-    int selectShuttle(long id, Shuttle shuttle);
-    List<Candidate> findCandidates(long id);
-    int selectCandidates(long id, List<Candidate> candidates);
+    int selectShuttle(long id, Long shuttleId);
+    List<Long> findCandidates(long id);
+    int selectCandidates(long id, List<Long> candidates);
 }

@@ -55,7 +55,9 @@ public class UserDataAccessService implements UserDao{
 
     @Override
     public int updateById(long id, Candidate candidate) {
-        if (deleteById(id) == 1)
+        //Make sure id an user name are immutable
+        String userName = findById(id).map(c -> c.getUserName()).orElse("");
+        if (id != candidate.getUserId() || !userName.equals(candidate.getUserName()) || deleteById(id) == 1)
             return 1;
         return insert(candidate);
     }

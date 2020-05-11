@@ -16,14 +16,10 @@ class MissionToMarsApplicationTests {
 
 	@Test
 	void contextLoads() {
-		List<Candidate> userDb = new ArrayList<>();
-		userDb.add(new Candidate(1, "", "", null));
-		userDb.add(new Candidate(2, "", "", null));
-		userDb.add(new Candidate(6, "", "", null));
-		userDb.add(new Candidate(4, "", "", null));
-		long nextId = userDb.stream().sorted(Comparator.comparing(Candidate::getUserId).reversed())
-				.collect(Collectors.toList()).get(0).getUserId();
-		System.out.println(nextId);
+		List<String[]> list = CSVOperator.readAll("MissionData.csv", 1);
+		for (int i = 0; i < list.get(0).length; i++) {
+			System.out.println(list.get(0)[i]);
+		}
 	}
 
 }

@@ -31,8 +31,8 @@ public class CoordinatorInfo {
         this.phone = phone;
     }
 
-    public CoordinatorInfo(@JsonProperty String name,
-                           @JsonProperty String email, @JsonProperty String phone) {
+    public CoordinatorInfo(@JsonProperty("name") String name,
+                           @JsonProperty("email") String email, @JsonProperty("phone") String phone) {
         this.name = name;
         this.email = email;
         this.phone = phone;

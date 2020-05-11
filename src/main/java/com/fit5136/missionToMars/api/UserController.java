@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @PutMapping(path = "changePassword/{id}")
-    public void changePassword(@PathVariable("id") long id, String password){
+    public void changePassword(@PathVariable("id") long id, @RequestBody String password){
         service.changePassword(id, password);
     }
 }

@@ -10,11 +10,12 @@ import org.springframework.stereotype.Repository;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Repository("missionDao")
 public class MissionDataAccessService implements MissionDao {
     private List<Mission> missionDb = new ArrayList<>();
-    private List<Shuttle> shuttleDb = new ArrayList<>();
 
     @Override
     public List<Mission> getAll() {
@@ -24,7 +25,26 @@ public class MissionDataAccessService implements MissionDao {
 
     @Override
     public int insert(Mission mission) {
+        sync();
+        if (mission.getId() == -1) {
+            Long nextId = missionDb.stream().sorted(Comparator.comparing(Mission::getId).reversed())
+                    .collect(Collectors.toList()).get(0).getId() + 1;
+            mission = new Mission(nextId, mission.getMissionName(), mission.getMissionDesc(),
+                    mission.getOrigin(), mission.getAllowedCountries(), mission.getCoordinatorInfo(),
+                    mission.getJobs(), mission.getLaunchDate(), mission.getDuration(),
+                    mission.getCargoFor(), mission.getEmpReq(), mission.getStatus(),
+                    mission.getCandidates(), mission.getShuttleId());
+        }
+        //Stop insertion if id is duplicate
+        long inputId = mission.getId();
+        if (missionDb.stream().anyMatch(m -> m.getId() ==inputId)) {
+            return 1;
+        }
         missionDb.add(mission);
+        List<String[]> list = read();
+        list.add(mission.toArray());
+        write(list);
+
         return 0;
     }
 
@@ -36,26 +56,47 @@ public class MissionDataAccessService implements MissionDao {
 
     @Override
     public int updateById(long id, Mission mission) {
-        return 0;
+        if ( id != mission.getId() || deleteById(id) == 1)
+            return 1;
+        //Make sure id is immutable
+        return insert(mission);
     }
 
     @Override
     public int deleteById(long id) {
-        return 0;
+        Optional<Mission> optional = findById(id);
+        optional.ifPresent(m -> {
+            List<String[]> list = read();
+            //The first row is the column names
+            list.remove(missionDb.indexOf(m) + 1);
+            write(list);
+            missionDb.remove(m);
+        });
+        return optional.isPresent() ? 0 : 1;
     }
 
     @Override
-    public int selectShuttle(long id, Shuttle shuttle) {
-        return 0;
+    public int selectShuttle(long id, Long shuttleId) {
+        Optional<Mission> optional = findById(id);
+        optional.ifPresent(m -> {
+            m.setShuttleId(shuttleId);
+            updateById(id, m);
+        });
+        return optional.isPresent() ? 0 : 1;
     }
 
     @Override
-    public List<Candidate> findCandidates(long id) {
+    public List<Long> findCandidates(long id) {
         return null;
     }
 
     @Override
-    public int selectCandidates(long id, List<Candidate> candidates) {
+    public int selectCandidates(long id, List<Long> candidates) {
+        Optional<Mission> optional = findById(id);
+        optional.ifPresent(m ->{
+            m.setCandidates(candidates);
+            updateById(id, m);
+        });
         return 0;
     }
 
@@ -81,8 +122,10 @@ public class MissionDataAccessService implements MissionDao {
             }
             List<Long> candidates = new ArrayList<>();
             String[] cans = array[16].split(", ");
-            for (String c : cans) {
-                candidates.add(Long.parseLong(c));
+            if (cans.length > 1) {
+                for (String c : cans) {
+                    candidates.add(Long.parseLong(c));
+                }
             }
             Date date = new Date();
             try{
@@ -94,25 +137,10 @@ public class MissionDataAccessService implements MissionDao {
             missionDb.add(new Mission(Long.parseLong(array[0]),array[1], array[2], array[3],
                     array[4].split(", "), new CoordinatorInfo(array[5], array[6], array[7]),
                     jobs, date, Integer.parseInt(array[11]), array[12], empReqs, array[15],
-                    candidates , Long.parseLong(array[17])));
+                    candidates , !array[17].isEmpty() ? Long.parseLong(array[17]) : null));
         }));
     }
-    public void syncShuttleDb(){
-        shuttleDb.clear();
-        List<String[]> list = CSVOperator.readAll("MissionData.csv", 1);
-        list.forEach(a -> Optional.ofNullable(a).ifPresent(array ->{
-            Date date = new Date();
-            try {
-                date = new SimpleDateFormat("MM/dd/yyyy").parse(array[2]);
-            }
-            catch (ParseException e){
-                e.printStackTrace();
-            }
-            shuttleDb.add(new Shuttle(Long.parseLong(array[0]), array[1], date,
-                    Integer.parseInt(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]),
-                    Integer.parseInt(array[6]), array[7]));
-        }));
-    }
+
 
     public List<String[]> read(){
         //Include the column name line

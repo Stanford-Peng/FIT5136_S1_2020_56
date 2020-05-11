@@ -2,7 +2,9 @@ package com.fit5136.missionToMars.model;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fit5136.missionToMars.util.StringUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,15 +25,16 @@ public class Mission {
     private List<Long> candidates;
     private Long shuttleId;
 
-    public Mission(@JsonProperty long id, @JsonProperty String missionName,
-                   @JsonProperty String missionDesc, @JsonProperty String origin,
-                   @JsonProperty String[] allowedCountries,
-                   @JsonProperty CoordinatorInfo coordinatorInfo,
-                   @JsonProperty HashMap<String, String> jobs, @JsonProperty Date launchDate,
-                   @JsonProperty int duration, @JsonProperty String cargoFor,
-                   @JsonProperty HashMap<String, Integer> empReq,
-                   @JsonProperty String status, @JsonProperty List<Long> candidates,
-                   @JsonProperty Long shuttleId) {
+    public Mission(@JsonProperty("id") long id, @JsonProperty("missionName") String missionName,
+                   @JsonProperty("missionDesc") String missionDesc, @JsonProperty("origin") String origin,
+                   @JsonProperty("allowedCountries") String[] allowedCountries,
+                   @JsonProperty("coordinatorInfo") CoordinatorInfo coordinatorInfo,
+                   @JsonProperty("jobs") HashMap<String, String> jobs,
+                   @JsonProperty("launchDate") Date launchDate,
+                   @JsonProperty("duration") int duration, @JsonProperty("cargoFor") String cargoFor,
+                   @JsonProperty("empReq") HashMap<String, Integer> empReq,
+                   @JsonProperty("status") String status, @JsonProperty("candidates") List<Long> candidates,
+                   @JsonProperty("shuttleId") Long shuttleId) {
         this.id = id;
         this.missionName = missionName;
         this.missionDesc = missionDesc;
@@ -157,6 +160,23 @@ public class Mission {
     }
 
     public String[] toArray(){
-        return null;
+        StringBuffer buffer = new StringBuffer();
+        for (String allowedCountry : allowedCountries) {
+            buffer.append(allowedCountry);
+        }
+        String countries = buffer.toString();
+        buffer.setLength(0);
+        candidates.forEach(c -> buffer.append(String.valueOf(c)).append(", "));
+        if (candidates.size() > 0)
+            buffer.delete(buffer.length() - 2, buffer.length());
+        String cans = buffer.toString();
+        return new String[]{String.valueOf(id), missionName, missionDesc, origin, countries,
+                coordinatorInfo.getName(), coordinatorInfo.getEmail(), coordinatorInfo.getPhone(),
+                StringUtil.removeBoundary(jobs.keySet().toString()),
+                StringUtil.removeBoundary(jobs.values().toString()),
+                new SimpleDateFormat("MM/dd/yyyy").format(launchDate), String.valueOf(duration),
+                cargoFor, StringUtil.removeBoundary(empReq.keySet().toString()),
+                StringUtil.removeBoundary(empReq.values().toString()), status,
+                cans, shuttleId == null? "" : String.valueOf(shuttleId)};
     }
 }
