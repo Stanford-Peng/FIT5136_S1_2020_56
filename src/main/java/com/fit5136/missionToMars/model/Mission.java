@@ -1,6 +1,8 @@
 package com.fit5136.missionToMars.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,26 +13,31 @@ public class Mission {
     private String missionDesc;
     private String origin;
     private String[] allowedCountries;
-    private Coordinator coordinator;
+    private CoordinatorInfo coordinatorInfo;
     private HashMap<String, String> jobs;
     private Date launchDate;
     private int duration;
     private String cargoFor;
-    private HashMap<String, String> empReq;
+    private HashMap<String, Integer> empReq;
     private String status;
-    private List<Candidate> candidates;
-    private Shuttle shuttle;
+    private List<Long> candidates;
+    private Long shuttleId;
 
-    public Mission(long id, String missionName, String missionDesc, String origin,
-                   String[] allowedCountries, Coordinator coordinator, HashMap<String, String> jobs,
-                   Date launchDate, int duration, String cargoFor, HashMap<String, String> empReq,
-                   String status, List<Candidate> candidates, Shuttle shuttle) {
+    public Mission(@JsonProperty long id, @JsonProperty String missionName,
+                   @JsonProperty String missionDesc, @JsonProperty String origin,
+                   @JsonProperty String[] allowedCountries,
+                   @JsonProperty CoordinatorInfo coordinatorInfo,
+                   @JsonProperty HashMap<String, String> jobs, @JsonProperty Date launchDate,
+                   @JsonProperty int duration, @JsonProperty String cargoFor,
+                   @JsonProperty HashMap<String, Integer> empReq,
+                   @JsonProperty String status, @JsonProperty List<Long> candidates,
+                   @JsonProperty Long shuttleId) {
         this.id = id;
         this.missionName = missionName;
         this.missionDesc = missionDesc;
         this.origin = origin;
         this.allowedCountries = allowedCountries;
-        this.coordinator = coordinator;
+        this.coordinatorInfo = coordinatorInfo;
         this.jobs = jobs;
         this.launchDate = launchDate;
         this.duration = duration;
@@ -38,23 +45,23 @@ public class Mission {
         this.empReq = empReq;
         this.status = status;
         this.candidates = candidates;
-        this.shuttle = shuttle;
+        this.shuttleId = shuttleId;
     }
 
-    public List<Candidate> getCandidates() {
+    public List<Long> getCandidates() {
         return candidates;
     }
 
-    public void setCandidates(List<Candidate> candidates) {
+    public void setCandidates(List<Long> candidates) {
         this.candidates = candidates;
     }
 
-    public Shuttle getShuttle() {
-        return shuttle;
+    public Long getShuttleId() {
+        return shuttleId;
     }
 
-    public void setShuttle(Shuttle shuttle) {
-        this.shuttle = shuttle;
+    public void setShuttleId(Long shuttleId) {
+        this.shuttleId = shuttleId;
     }
 
     public long getId() {
@@ -101,12 +108,12 @@ public class Mission {
         this.status = status;
     }
 
-    public Coordinator getCoordinator() {
-        return coordinator;
+    public CoordinatorInfo getCoordinatorInfo() {
+        return coordinatorInfo;
     }
 
-    public void setCoordinator(Coordinator coordinator) {
-        this.coordinator = coordinator;
+    public void setCoordinatorInfo(CoordinatorInfo coordinatorInfo) {
+        this.coordinatorInfo = coordinatorInfo;
     }
 
     public HashMap<String, String> getJobs() {
@@ -141,11 +148,15 @@ public class Mission {
         this.cargoFor = cargoFor;
     }
 
-    public HashMap<String, String> getEmpReq() {
+    public HashMap<String, Integer> getEmpReq() {
         return empReq;
     }
 
-    public void setEmpReq(HashMap<String, String> empReq) {
+    public void setEmpReq(HashMap<String, Integer> empReq) {
         this.empReq = empReq;
+    }
+
+    public String[] toArray(){
+        return null;
     }
 }
