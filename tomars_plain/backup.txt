@@ -1,0 +1,63 @@
+    $(".delete").click(function () {
+        alert("problem");
+        console.log(countries);
+        var allowedCountries = $("#allowedCountries");
+        countries = countries.filter(function (val, index, arr) {
+            if (val != $(this).prev())
+                return val;
+        })
+        $(this).prev().remove();
+        $(this).remove();
+
+onclick="deleteCountry()";
+            function deleteCountry() {
+        alert("problem");
+        console.log(countries);
+        var allowedCountries = $("#allowedCountries");
+        countries = countries.filter(function (val, index, arr) {
+            if (val != $(this).prev().val())
+                return val;
+        });
+        $(this).prev().remove();
+        $(this).remove();
+        };
+
+            $(".delete").click(function(){
+        alert("bug");
+    })
+
+        $(document).ready(function(){   
+        $(".delete").click(function () {
+        alert("problem");
+        console.log(countries);
+        var allowedCountries = $("#allowedCountries");
+        countries = countries.filter(function (val, index, arr) {
+            if (val != $(this).prev())
+                return val;
+        })
+        $(this).prev().remove();
+        $(this).remove();
+     }
+     )})
+
+             //var countrySelected = $("#countries option:selected").text();
+        //var added = $("<input name='Countries Allowed'></input>").val(countrySelected);
+        
+        //if (countries.includes(countrySelected)) {
+
+            //alert(123);
+            //allowedCountries.val(allowedCountries.val().replace(countrySelected, ''));
+        //} else { 
+            //alert("No such country exists in the list.") 
+            //}
+
+
+        //console.log($("#allowedCountries").val());
+        //alert($("#countries option:selected").text());
+        //alert($("#allowedCountries").val());
+
+                    //console.log(allowedCountries.toString());
+        //var existed='';
+        //if(allowedCountries.length > 0){
+        //    for(item in allowedCountries){existed += item.val()};
+        //}   
