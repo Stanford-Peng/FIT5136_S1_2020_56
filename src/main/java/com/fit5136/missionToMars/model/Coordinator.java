@@ -1,19 +1,10 @@
 package com.fit5136.missionToMars.model;
 
-public class Coordinator {
-    private final int id;
-    private final String name;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    public int getId() {
-        return id;
-    }
+public class Coordinator extends User{
 
-    public String getName() {
-        return name;
-    }
-
-    public Coordinator(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public Coordinator(long id, String username, String pwd) {
+        super(id, username, pwd);
     }
 }
