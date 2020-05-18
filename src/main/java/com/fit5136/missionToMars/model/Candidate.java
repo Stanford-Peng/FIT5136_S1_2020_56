@@ -1,6 +1,7 @@
 package com.fit5136.missionToMars.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fit5136.missionToMars.util.StringUtil;
 
 import java.text.SimpleDateFormat;
 
@@ -30,36 +31,43 @@ public class Candidate extends User{
         for (String str : allergyArray){
             buffer.append(str).append(", ");
         }
-        buffer.delete(buffer.length() - 2, buffer.length());
+        if (buffer.length() > 1)
+            buffer.delete(buffer.length() - 2, buffer.length());
         String allergies = buffer.toString();
         buffer = new StringBuffer();
         for (String str : profile.getQualifications()){
             buffer.append(str).append(", ");
         }
-        buffer.delete(buffer.length() - 2, buffer.length());
+        if (buffer.length() > 1)
+            buffer.delete(buffer.length() - 2, buffer.length());
         String qualifications = buffer.toString();
         buffer = new StringBuffer();
         for (int str : profile.getWorkExp()){
             buffer.append(str).append(", ");
         }
-        buffer.delete(buffer.length() - 2, buffer.length());
+        if (buffer.length() > 1)
+            buffer.delete(buffer.length() - 2, buffer.length());
         String workExp = buffer.toString();
         buffer = new StringBuffer();
         for (String str : profile.getOccupations()){
             buffer.append(str).append(", ");
         }
-        buffer.delete(buffer.length() - 2, buffer.length());
+        if (buffer.length() > 1)
+            buffer.delete(buffer.length() - 2, buffer.length());
         String occupations = buffer.toString();
         buffer = new StringBuffer();
         for (String str : profile.getLanguages()){
             buffer.append(str).append(", ");
         }
-        buffer.delete(buffer.length() - 2, buffer.length());
+        if (buffer.length() > 1)
+            buffer.delete(buffer.length() - 2, buffer.length());
         String languages = buffer.toString();
          return new String[]{String.valueOf(getUserId()), getUserName(), getPassword(), profile.getName(),
             new SimpleDateFormat("MM/dd/yyyy").format(profile.getDob()), profile.getStreet(),
                  profile.getCity(), profile.getPostal(), profile.getCountry(), profile.getIdNumber(),
                     profile.getIdType(), profile.getGender(), allergies, profile.getFoodPref(),
-                    qualifications, workExp, occupations, profile.getComputerSkill(), languages};
+                    qualifications, workExp, occupations, profile.getComputerSkill(), languages,
+                    StringUtil.removeBoundary(profile.getHealthRecord().toString()),
+                    StringUtil.removeBoundary(profile.getCriminalRecord().toString())};
     }
 }

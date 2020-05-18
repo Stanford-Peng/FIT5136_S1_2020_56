@@ -2,6 +2,7 @@ package com.fit5136.missionToMars;
 
 import com.fit5136.missionToMars.model.Candidate;
 import com.fit5136.missionToMars.util.CSVOperator;
+import com.fit5136.missionToMars.util.StringUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -16,10 +17,12 @@ class MissionToMarsApplicationTests {
 
 	@Test
 	void contextLoads() {
-		List<String[]> list = CSVOperator.readAll("MissionData.csv", 1);
-		for (int i = 0; i < list.get(0).length; i++) {
-			System.out.println(list.get(0)[i]);
+		String a = null;
+		try{
+			a.isEmpty();
 		}
+		catch(NullPointerException e)
+		{System.err.println("error");}
 	}
 
 }
