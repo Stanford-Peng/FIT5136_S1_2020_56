@@ -39,11 +39,6 @@ public class MissionController {
         missionService.selectShuttle(id, shuttleId);
     }
 
-    @GetMapping(path = "/findCandidates/{id}")
-    public List<Long> findCandidates(@PathVariable long id){
-        return missionService.findCandidates(id);
-    }
-
     @PutMapping(path = "/selectCandidates/{id}")
     public void selectCandidates(@PathVariable long id, @RequestBody List<Long> candidates){
         missionService.selectCandidates(id, candidates);

@@ -1,13 +1,16 @@
 package com.fit5136.missionToMars.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public abstract class User {
     private final long userId;
     private final String userName;
     private String password;
 
-    public User(long id, String username, String password) {
-        userId = id;
-        userName = username;
+    public User(@JsonProperty("userId") long userId, @JsonProperty("userName") String userName,
+                @JsonProperty("password") String password) {
+        this.userId = userId;
+        this.userName = userName;
         this.password = password;
     }
 

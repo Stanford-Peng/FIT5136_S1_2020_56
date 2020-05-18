@@ -19,6 +19,7 @@ public class Mission {
     private HashMap<String, String> jobs;
     private Date launchDate;
     private int duration;
+    private String location;
     private String cargoFor;
     private HashMap<String, Integer> empReq;
     private String status;
@@ -26,14 +27,17 @@ public class Mission {
     private Long shuttleId;
 
     public Mission(@JsonProperty("id") long id, @JsonProperty("missionName") String missionName,
-                   @JsonProperty("missionDesc") String missionDesc, @JsonProperty("origin") String origin,
+                   @JsonProperty("missionDesc") String missionDesc,
+                   @JsonProperty("origin") String origin,
                    @JsonProperty("allowedCountries") String[] allowedCountries,
                    @JsonProperty("coordinatorInfo") CoordinatorInfo coordinatorInfo,
                    @JsonProperty("jobs") HashMap<String, String> jobs,
                    @JsonProperty("launchDate") Date launchDate,
-                   @JsonProperty("duration") int duration, @JsonProperty("cargoFor") String cargoFor,
+                   @JsonProperty("duration") int duration, @JsonProperty("location") String location,
+                   @JsonProperty("cargoFor") String cargoFor,
                    @JsonProperty("empReq") HashMap<String, Integer> empReq,
-                   @JsonProperty("status") String status, @JsonProperty("candidates") List<Long> candidates,
+                   @JsonProperty("status") String status,
+                   @JsonProperty("candidates") List<Long> candidates,
                    @JsonProperty("shuttleId") Long shuttleId) {
         this.id = id;
         this.missionName = missionName;
@@ -44,6 +48,7 @@ public class Mission {
         this.jobs = jobs;
         this.launchDate = launchDate;
         this.duration = duration;
+        this.location = location;
         this.cargoFor = cargoFor;
         this.empReq = empReq;
         this.status = status;
@@ -159,6 +164,10 @@ public class Mission {
         this.empReq = empReq;
     }
 
+    public String getLocation() { return location; }
+
+    public void setLocation(String location) { this.location = location; }
+
     public String[] toArray(){
         StringBuffer buffer = new StringBuffer();
         for (String allowedCountry : allowedCountries) {
@@ -175,7 +184,7 @@ public class Mission {
                 StringUtil.removeBoundary(jobs.keySet().toString()),
                 StringUtil.removeBoundary(jobs.values().toString()),
                 new SimpleDateFormat("MM/dd/yyyy").format(launchDate), String.valueOf(duration),
-                cargoFor, StringUtil.removeBoundary(empReq.keySet().toString()),
+                location, cargoFor, StringUtil.removeBoundary(empReq.keySet().toString()),
                 StringUtil.removeBoundary(empReq.values().toString()), status,
                 cans, shuttleId == null? "" : String.valueOf(shuttleId)};
     }

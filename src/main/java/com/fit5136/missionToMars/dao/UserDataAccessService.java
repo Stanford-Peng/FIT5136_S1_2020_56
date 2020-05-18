@@ -1,15 +1,16 @@
 package com.fit5136.missionToMars.dao;
 
-import com.fit5136.missionToMars.model.Candidate;
-import com.fit5136.missionToMars.model.Profile;
-import com.fit5136.missionToMars.model.User;
+import com.fit5136.missionToMars.exception.DuplicateUserNameException;
+import com.fit5136.missionToMars.exception.UnknownUserIdException;
+import com.fit5136.missionToMars.model.*;
 import com.fit5136.missionToMars.util.CSVOperator;
 import org.springframework.stereotype.Repository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Repository("userDao")
@@ -22,7 +23,7 @@ public class UserDataAccessService implements UserDao{
     }
 
     @Override
-    public int insert(Candidate candidate) {
+    public void insert(Candidate candidate) {
         sync();
         //use -1 as id when post a candidate at the front end, replace -1 with the next id in database
         //don't replace if it is a put request
@@ -37,61 +38,125 @@ public class UserDataAccessService implements UserDao{
             String inputUserName = candidate.getUserName();
             Optional<Candidate> optional = userDb.stream().
                     filter(c -> c.getUserName().equals(inputUserName)).findFirst();
-            if (optional.isPresent()) { return 1; }
+            if (optional.isPresent()) {
+                throw new DuplicateUserNameException("Username exists: " + inputUserName);
+            }
         }
         userDb.add(candidate);
         String[] array = candidate.toArray();
         List list = read();
         list.add(array);
         write(list);
-        return 0;
     }
 
     @Override
     public Optional<Candidate> findById(long id) {
         sync();
-        return userDb.stream().filter(c -> c.getUserId() == id).findFirst();
+        Optional<Candidate> optional = userDb
+                .stream()
+                .filter(c -> c.getUserId() == id)
+                .findFirst();
+        if (!optional.isPresent()){
+            throw new UnknownUserIdException("unknown user id: " + id);
+        }
+        return optional;
     }
 
     @Override
-    public int updateById(long id, Candidate candidate) {
-        //Make sure id an user name are immutable
-        String userName = findById(id).map(c -> c.getUserName()).orElse("");
-        if (id != candidate.getUserId() || !userName.equals(candidate.getUserName()) || deleteById(id) == 1)
-            return 1;
-        return insert(candidate);
+    public void updateById(long id, Candidate candidate) {
+        try {
+            //Make sure id an user name are immutable
+            String userName = findById(id).map(c -> c.getUserName()).orElse("");
+            if (id != candidate.getUserId() || !userName.equals(candidate.getUserName()))
+                return;
+            deleteById(id);
+            insert(candidate);
+        }
+        catch (UnknownUserIdException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public int deleteById(long id) {
-        Optional<Candidate> optional = findById(id);
-        optional.ifPresent(c -> {
-            List<String[]> list = read();
-            //the first line is the column name
-            list.remove(userDb.indexOf(c) + 1);
-            write(list);
-        });
-        return optional.isPresent() ? 0 : 1;
+    public void deleteById(long id) {
+        try {
+            Optional<Candidate> optional = findById(id);
+            optional.ifPresent(c -> {
+                List<String[]> list = read();
+                //the first line is the column name
+                list.remove(userDb.indexOf(c) + 1);
+                write(list);
+            });
+        }
+        catch (UnknownUserIdException e){
+            e.printStackTrace();
+        }
+
     }
 
     @Override
-    public int setProfile(long id, Profile profile) {
-        Optional<Candidate> optional = findById(id);
-        optional.ifPresent(c -> {
-            c.setProfile(profile);
-            updateById(id, c);
-        });
-        return optional.isPresent() ? 0 : 1;
+    public void setProfile(long id, Profile profile) {
+        try {
+            Optional<Candidate> optional = findById(id);
+            optional.ifPresent(c -> {
+                c.setProfile(profile);
+                updateById(id, c);
+            });
+        }
+        catch(UnknownUserIdException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public int changePassword(long id, String password) {
-        Optional<Candidate> optional = findById(id);
-        optional.ifPresent(c -> {
-            c.setPassword(password);
-            updateById(id, c);
-        });
-        return optional.isPresent() ? 0 : 1;
+    public void changePassword(long id, String password) {
+        try {
+            Optional<Candidate> optional = findById(id);
+            optional.ifPresent(c -> {
+                c.setPassword(password);
+                updateById(id, c);
+            });
+        }
+        catch (UnknownUserIdException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<Long> findQualifiedCandidates(Criteria criteria, Mission mission) {
+      /*  userDb.stream().filter(c -> c.getProfile() != null
+                && Period.between(new Date().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate(), c.getProfile().getDob().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()).getYears() >= criteria.getMinAge()
+                && Period.between(new Date().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate(), c.getProfile().getDob().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()).getYears() <= criteria.getMaxAge()
+                &&
+
+        );*/
+        return null;
+    }
+
+    @Override
+    //Return 0 if the username exists in the user database
+    public int hasDuplicateUsername(String username) {
+        sync();
+        boolean has = userDb.stream().anyMatch(c -> c.getUserName().equals(username));
+        return has ? 0 : 1;
+    }
+
+    @Override
+    //Return the userID, return -1 if credential is wrong
+    public long candidateLogin(String userName, String password) {
+        Optional<Candidate> optional = userDb.stream().filter(c -> c.getUserName().equals(userName)
+                && c.getPassword().equals(password))
+                .findFirst();
+        //Return the userID, return -1 if credential is wrong
+        return optional.isPresent() ? optional.get().getUserId() : -1;
     }
 
     //Read the csv file, for each row instantiate a new candidate, add to userDb
@@ -123,7 +188,9 @@ public class UserDataAccessService implements UserDao{
                                         array[9], array[10], array[11], array[12].split(", "),
                                         array[13], array[14].split(", "),
                                         workExp, array[16].split(", "),
-                                        array[17], array[18].split(", "))));
+                                        array[17], array[18].split(", "),
+                                        new HealthRecord(Arrays.asList(array[19].split(", "))),
+                                        new CriminalRecord(Arrays.asList(array[20].split(", "))))));
                     }
                 }));
     }

@@ -14,7 +14,6 @@ public class Profile {
     private String idNumber;
     private String idType;
     private String gender;
-    @JsonProperty("allergies")
     private String[] allergies;
     private String foodPref;
     private String[] qualifications;
@@ -22,7 +21,24 @@ public class Profile {
     private String[] occupations;
     private String computerSkill;
     private String[] languages;
+    private HealthRecord healthRecord;
+    private CriminalRecord criminalRecord;
 
+    public HealthRecord getHealthRecord() {
+        return healthRecord;
+    }
+
+    public void setHealthRecord(HealthRecord healthRecord) {
+        this.healthRecord = healthRecord;
+    }
+
+    public CriminalRecord getCriminalRecord() {
+        return criminalRecord;
+    }
+
+    public void setCriminalRecord(CriminalRecord criminalRecord) {
+        this.criminalRecord = criminalRecord;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -153,7 +169,9 @@ public class Profile {
                    @JsonProperty("workExp") int[] workExp,
                    @JsonProperty("occupations") String[] occupations,
                    @JsonProperty("computerSkill") String computerSkill,
-                   @JsonProperty("languages") String[] languages) {
+                   @JsonProperty("languages") String[] languages,
+                   @JsonProperty("healthRecord") HealthRecord healthRecord,
+                   @JsonProperty("criminalRecord") CriminalRecord criminalRecord) {
         this.name = name;
         this.dob = dob;
         this.street = street;
@@ -170,6 +188,8 @@ public class Profile {
         this.occupations = occupations;
         this.computerSkill = computerSkill;
         this.languages = languages;
+        this.healthRecord = healthRecord;
+        this.criminalRecord = criminalRecord;
     }
 
 }

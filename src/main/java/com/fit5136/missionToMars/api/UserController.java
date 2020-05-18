@@ -2,9 +2,9 @@ package com.fit5136.missionToMars.api;
 
 import com.fit5136.missionToMars.model.Candidate;
 import com.fit5136.missionToMars.model.Profile;
+import com.fit5136.missionToMars.model.User;
 import com.fit5136.missionToMars.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,5 +47,15 @@ public class UserController {
     @PutMapping(path = "changePassword/{id}")
     public void changePassword(@PathVariable("id") long id, @RequestBody String password){
         service.changePassword(id, password);
+    }
+
+    @GetMapping(path = "/hasDuplicateUsername")
+    public int hasDuplicateUsername(@RequestBody String username){
+        return service.hasDuplicateUsername(username);
+    }
+
+    @PostMapping(path = "/candidateLogin")
+    public long candidateLogin(@RequestBody User user){
+        return service.candidateLogin(user.getUserName(), user.getPassword());
     }
 }

@@ -1,18 +1,19 @@
 package com.fit5136.missionToMars.dao;
 
-import com.fit5136.missionToMars.model.Candidate;
-import com.fit5136.missionToMars.model.Profile;
-import com.fit5136.missionToMars.model.User;
+import com.fit5136.missionToMars.model.*;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserDao {
     List<Candidate> getAll();
-    int insert(Candidate candidate);
+    void insert(Candidate candidate);
     Optional<Candidate> findById(long id);
-    int updateById(long id, Candidate candidate);
-    int deleteById(long id);
-    int setProfile(long id, Profile profile);
-    int changePassword(long id, String password);
+    void updateById(long id, Candidate candidate);
+    void deleteById(long id);
+    void setProfile(long id, Profile profile);
+    void changePassword(long id, String password);
+    int hasDuplicateUsername(String username);
+    List<Long> findQualifiedCandidates(Criteria criteria, Mission mission);
+    long candidateLogin(String userName, String password);
 }

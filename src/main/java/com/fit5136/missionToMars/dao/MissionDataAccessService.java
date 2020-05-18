@@ -1,16 +1,11 @@
 package com.fit5136.missionToMars.dao;
-
-import com.fit5136.missionToMars.model.Candidate;
 import com.fit5136.missionToMars.model.CoordinatorInfo;
 import com.fit5136.missionToMars.model.Mission;
-import com.fit5136.missionToMars.model.Shuttle;
 import com.fit5136.missionToMars.util.CSVOperator;
 import org.springframework.stereotype.Repository;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Repository("missionDao")
@@ -32,7 +27,7 @@ public class MissionDataAccessService implements MissionDao {
             mission = new Mission(nextId, mission.getMissionName(), mission.getMissionDesc(),
                     mission.getOrigin(), mission.getAllowedCountries(), mission.getCoordinatorInfo(),
                     mission.getJobs(), mission.getLaunchDate(), mission.getDuration(),
-                    mission.getCargoFor(), mission.getEmpReq(), mission.getStatus(),
+                    mission.getLocation(), mission.getCargoFor(), mission.getEmpReq(), mission.getStatus(),
                     mission.getCandidates(), mission.getShuttleId());
         }
         //Stop insertion if id is duplicate
@@ -86,21 +81,16 @@ public class MissionDataAccessService implements MissionDao {
     }
 
     @Override
-    public List<Long> findCandidates(long id) {
-        return null;
-    }
-
-    @Override
     public int selectCandidates(long id, List<Long> candidates) {
         Optional<Mission> optional = findById(id);
         optional.ifPresent(m ->{
             m.setCandidates(candidates);
             updateById(id, m);
         });
-        return 0;
+        return optional.isPresent() ? 0 : 1;
     }
 
-    public void sync(){
+    private void sync(){
         missionDb.clear();
         List<String[]> list = CSVOperator.readAll("MissionData.csv", 1);
         list.forEach(a -> Optional.ofNullable(a).ifPresent(array ->{
@@ -111,8 +101,8 @@ public class MissionDataAccessService implements MissionDao {
                 jobs.put(jobNames[i], jobDesc[i]);
             }
             HashMap<String, Integer> empReqs = new HashMap();
-            String[] titles = array[13].split(", ");
-            String[] numbers = array[14].split(", ");
+            String[] titles = array[14].split(", ");
+            String[] numbers = array[15].split(", ");
             Integer[] nums = new Integer[numbers.length];
             for (int i = 0; i < nums.length; i++) {
                 nums[i] = Integer.parseInt(numbers[i]);
@@ -121,7 +111,7 @@ public class MissionDataAccessService implements MissionDao {
                 empReqs.put(titles[i], nums[i]);
             }
             List<Long> candidates = new ArrayList<>();
-            String[] cans = array[16].split(", ");
+            String[] cans = array[17].split(", ");
             if (cans.length > 1) {
                 for (String c : cans) {
                     candidates.add(Long.parseLong(c));
@@ -136,18 +126,18 @@ public class MissionDataAccessService implements MissionDao {
             }
             missionDb.add(new Mission(Long.parseLong(array[0]),array[1], array[2], array[3],
                     array[4].split(", "), new CoordinatorInfo(array[5], array[6], array[7]),
-                    jobs, date, Integer.parseInt(array[11]), array[12], empReqs, array[15],
-                    candidates , !array[17].isEmpty() ? Long.parseLong(array[17]) : null));
+                    jobs, date, Integer.parseInt(array[11]), array[12], array[13], empReqs, array[16],
+                    candidates , !array[18].isEmpty() ? Long.parseLong(array[18]) : null));
         }));
     }
 
 
-    public List<String[]> read(){
+    private List<String[]> read(){
         //Include the column name line
         return CSVOperator.readAll("MissionData.csv", 0);
     }
 
-    public void write(List<String[]> list){
+    private void write(List<String[]> list){
         CSVOperator.write("MissionData.csv", list);
     }
 }

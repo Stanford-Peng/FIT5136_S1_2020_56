@@ -14,6 +14,5 @@ public interface MissionDao {
     int updateById(long id, Mission mission);
     int deleteById(long id);
     int selectShuttle(long id, Long shuttleId);
-    List<Long> findCandidates(long id);
     int selectCandidates(long id, List<Long> candidates);
 }
