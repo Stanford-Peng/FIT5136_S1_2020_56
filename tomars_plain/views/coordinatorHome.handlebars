@@ -3,17 +3,35 @@
     <button class="positiveBtn" onclick="location.href='/createMission';" >Create a Mission</button>
     <button class="negativeBtn" onclick="location.href='/coordinatorLogout';">Log out</button>
   </div>
+
+  
+
+  <div id="missionList">
+    <h3>Missions in Progress<h3>
   {{#each missions}}
-    <div>
-    <a href="/mission/{{this.id}}">
+    <div class="mission">
+    <a href="/mission/admin/{{this.id}}">
       {{this.missionName}}
     </a>
     </div>
-  {{/each}}
-  <div id="missionList">
-    
+  {{/each}}    
   </div>
+
 <style>
+
+#missionList {
+    border-radius: 50px;
+    border: 3px solid black;
+    width: 300px;
+    margin: auto;
+    padding: 10px;
+    margin-top: 100px;
+    text-align: center;
+}
+
+.mission{
+  margin:15px;
+}
 .positiveBtn {
     background-color: #4CAF50;
     color: white;

@@ -40,7 +40,7 @@
             <div class="textarea">
                 <label for="missionDescription">Mission Description: </label>
                 <textarea cols="100" rows="5" name="missionDescription"
-                    placeholder="Description about this Mission"></textarea>
+                    placeholder="Description about this Mission" required></textarea>
             </div>
         </fieldset>
 
@@ -51,7 +51,6 @@
                 {{> countries}}
             </select>
             <button type="button" id="addCountry">Add</button>
-            {{!-- <button type="button" id="deleteCountry">Delete</button> --}}
             <div id="allowedCountries"></div>
         </fieldset>
 
@@ -60,13 +59,13 @@
         <fieldset name="Coordinator Information">
             <legend>Coordinator Information: </legend>
             <label for="lastName">Last Name: </label>
-            <input type="text" name="lastName">
+            <input type="text" name="lastName" required>
             <label for="firstName">First Name: </label>
-            <input type="text" name="firstName">
+            <input type="text" name="firstName" required>
             <label for="phoneNumber">Phone Number: </label>
             <input type="tel" name="phoneNumber" pattern="[0-9]+">
             <label for="contactEmail">Email:</label>
-            <input type="email" name="contactEmail">
+            <input type="email" name="contactEmail" required>
         </fieldset>
 
         <fieldset id="jobsNeeded" name="Jobs Needed" class="container-box">
@@ -74,8 +73,8 @@
             <button type="button" id="addJob">Add</button>
             <div>
                 <label for="Job Name">Job Name: </label>
-                <input type="text" name="jobName">
-                <div class="textarea">
+                <input type="text" name="jobName" required>
+                <div class="textarea" required>
                     <label for="jobDescription">Job Description: </label>
                     <textarea cols="100" rows="3" name="jobDescription"> </textarea>
                 </div>
@@ -87,11 +86,11 @@
             <button type="button" id="addReq">Add</button>
             <div>
                 <label for="title">title: </label>
-                <input type="text" name="title">
+                <input type="text" name="title" required>
                 <label for="numberOfTitle">
                     Number:
                 </label>
-                <input type="number" name="numberOfTitle">
+                <input type="number" name="numberOfTitle" required>
             </div>
         </fieldset>
 
@@ -106,16 +105,16 @@
                 </select>
 
                 <label for="location">Location: </label>
-                <input type="text" name="location">
+                <input type="text" name="location" required>
             </div>
         </fieldset>
 
         <fieldset>
             <legend>Progression</legend>
             <label for="launchDate">Launch Date: </label>
-            <input type="date" name="launchDate">
+            <input type="date" name="launchDate" required>
             <label for="missionDuration">Duration of Mission(Month): </label>
-            <input type="number" name="missionDuration" min="1">
+            <input type="number" name="missionDuration" min="1" required>
             <label for="missionStatus">Mission Status: </label>
             <select name="missionStatus">
                 <option selected>Planning phase</option>

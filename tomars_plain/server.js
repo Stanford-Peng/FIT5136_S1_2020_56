@@ -20,7 +20,20 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
+var hbs = handlebars.create({});
 //express.urlencoded([extended]);
+var limitLength = function(content, maxLength){
+    if(content.length > maxLength){
+        content = content.substring(0,maxLength) + "...";
+
+    }
+    return content;
+}
+
+var cut = function(content,length){
+    return content.substring(0,length);
+}
+hbs.handlebars.registerHelper("cut",cut);
 
 app.get("/", function (req, res){
     res.sendFile(path.join(__dirname,'index.html'))
@@ -91,12 +104,47 @@ app.get("/adminHome", function(req,res){
     if(!req.session["admin"]){
         res.redirect("/adminLogin");
     } else {
-        res.send("To do");
+        var missions=[];
+        axios.get("http://localhost:8080/api/mission").then(function(response){
+            //alert("Data: " + response + "\nStatus: ");
+            console.log(response.data);
+            //response = JSON.parse(response);
+            for (item of response.data)
+            {           
+                
+                //var mission=JSON.parse(item);
+                console.log(item);
+                missions.push(item);
+                
+            };
+            res.render("adminHome",{layout:"adminBar", 'missions':missions});
+            console.log("missions:"+missions);
+          }).catch(error => {
+            console.log(error)
+          })
     }
     // console.log(req.session["admin"]);
     // console.log(req.session["coordinator"]);
     // console.log(req.session["id"]);
 })
+
+
+app.get("/mission/admin/:missionId", function (req, res) {
+    console.log(req.params["missionName"]);
+    if (!req.session["admin"]) {
+        res.redirect("/adminLogin");
+    } else {
+        var mission;
+        axios.get("http://localhost:8080/api/mission/"+req.params['missionId']).then(function(response){
+        console.log(response.data);
+        res.render("missionAdmin",{"layout":null,"mission":response.data});
+    }
+        ).catch(error => {
+            console.log(error);
+          })
+    }
+}
+)
 
 app.get("/coordinatorHome", function(req,res){
     if(!req.session["coordinator"]){
@@ -172,7 +220,10 @@ app.post("/postMission", function(req,res){
     coordinatorInfo["name"]=req.body["firstName"]+req.body["lastName"];
     coordinatorInfo["email"]=req.body["contactEmail"];
     coordinatorInfo["phone"]= req.body["phoneNumber"];
+    if(!req.body.hasOwnProperty("countriesAllowed")){
+        req.body["countriesAllowed"]= [null];
 
+    };
     mission = {
         id: -1,
         missionName: req.body["missionName"],
@@ -190,8 +241,10 @@ app.post("/postMission", function(req,res){
         candidates: [],
         shuttleId: null
       };
+      console.log("post",mission);
     axios.post("http://localhost:8080/api/mission",mission).then(function (response) {
-        console.log(response);
+        console.log("post res: "+response);
+        res.redirect("/coordinatorHome");
       })
       .catch(function (error) {
         console.log(error);
@@ -207,7 +260,7 @@ app.get("/mission/:missionId", function (req, res) {
         var mission;
         axios.get("http://localhost:8080/api/mission/"+req.params['missionId']).then(function(response){
         console.log(response.data);
-        res.send(response.data);
+        res.render("missionCoordinator",{"layout":null,"mission":response.data});
     }
         ).catch(error => {
             console.log(error);
@@ -215,6 +268,8 @@ app.get("/mission/:missionId", function (req, res) {
     }
 }
 )
+
+
 
 
 app.listen(8000, function(){
