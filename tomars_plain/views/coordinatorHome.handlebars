@@ -4,9 +4,11 @@
     <button class="negativeBtn" onclick="location.href='/coordinatorLogout';">Log out</button>
   </div>
   {{#each missions}}
-    <a href="/mission/{{this.missionName}}">
+    <div>
+    <a href="/mission/{{this.id}}">
       {{this.missionName}}
     </a>
+    </div>
   {{/each}}
   <div id="missionList">
     

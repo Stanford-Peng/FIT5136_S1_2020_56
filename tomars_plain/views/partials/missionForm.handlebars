@@ -5,27 +5,19 @@
         <input type="text" name="jobName">
         <div class="textarea">
             <label for="jobDescription">Job Description: </label>
-            <textarea cols="100" rows="3" name="job_Description"> </textarea>
+            <textarea cols="100" rows="3" name="jobDescription"> </textarea>
         </div>
-        <label for="numberOfJob">
-            Number:
-        </label>
-        <input type="number" name="numberOfJob">
         <button type="button" class="delete" onclick="deleteParent($(this))">x</button>
     </div>
 </template>
 <template>
     <div>
-        <label for="cargo_For">For: </label>
-        <select name="cargo_For">
-            <option selected>mission</option>
-            <option>journey</option>
-            <option>mission and journey</option>
-        </select>
-        <label for="cargoName">Cargo: </label>
-        <input type="text" name="cargoName">
-        <label for="cargoQuantity">Quantity: </label>
-        <input type="number" name="cargoQuantity">
+        <label for="title">title: </label>
+        <input type="text" name="title">
+        <label for="numberOfTitle">
+            Number:
+        </label>
+        <input type="number" name="numberOfTitle">
         <button type="button" class="delete" onclick="deleteParent($(this))">x</button>
     </div>
 </template>
@@ -87,28 +79,34 @@
                     <label for="jobDescription">Job Description: </label>
                     <textarea cols="100" rows="3" name="jobDescription"> </textarea>
                 </div>
-                <label for="numberOfJob">
+            </div>
+        </fieldset>
+
+        <fieldset id="employReq" name="Employment Requirements" class="container-box">
+            <legend>Employment Requirements</legend>
+            <button type="button" id="addReq">Add</button>
+            <div>
+                <label for="title">title: </label>
+                <input type="text" name="title">
+                <label for="numberOfTitle">
                     Number:
                 </label>
-                <input type="number" name="numberOfJob" min="1">
+                <input type="number" name="numberOfTitle">
             </div>
         </fieldset>
 
 
-        <fieldset id="cargoNeeded">
-            <legend>Cargo Requirements</legend>
-            <button type="button" id="addCargo">Add</button>
-            <div>
-                <label for="Cargo For">For: </label>
+        <fieldset>
+            <div>          
+                <label for="Cargo For">Cargo Requirements and Location: </label>
                 <select name="cargoFor">
                     <option selected>mission</option>
                     <option>journey</option>
                     <option>mission and journey</option>
                 </select>
-                <label for="cargoName">Cargo: </label>
-                <input type="text" name="cargoName">
-                <label for="cargoQuantity">Quantity: </label>
-                <input type="number" name="cargoQuantity" min="1">
+
+                <label for="location">Location: </label>
+                <input type="text" name="location">
             </div>
         </fieldset>
 
@@ -116,7 +114,7 @@
             <legend>Progression</legend>
             <label for="launchDate">Launch Date: </label>
             <input type="date" name="launchDate">
-            <label for="missionDuration">Duration of Mission(year): </label>
+            <label for="missionDuration">Duration of Mission(Month): </label>
             <input type="number" name="missionDuration" min="1">
             <label for="missionStatus">Mission Status: </label>
             <select name="missionStatus">
@@ -149,8 +147,6 @@
         console.log(countries);
     });
 
-
-
     function deleteCountry(self) {
         //console.log(countries);
         var allowedCountries = $("#allowedCountries");
@@ -165,7 +161,6 @@
         self.parent().remove();
     }
 
-
     $("#addJob").click(function () {
         var jobsNeeded = $("#jobsNeeded");
         var temp = $("template")[0];
@@ -173,11 +168,11 @@
         jobsNeeded.append(temp.content.cloneNode(true));
     })
 
-    $("#addCargo").click(function () {
-        var cargoNeeded = $("#cargoNeeded");
+    $("#addReq").click(function () {
+        var employReq = $("#employReq");
         var temp = $("template")[1];
         console.log(temp.content);
-        cargoNeeded.append(temp.content.cloneNode(true));
-
+        employReq.append(temp.content.cloneNode(true));
     })
+
 </script>
