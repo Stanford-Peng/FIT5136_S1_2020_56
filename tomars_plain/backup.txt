@@ -61,3 +61,14 @@ onclick="deleteCountry()";
         //if(allowedCountries.length > 0){
         //    for(item in allowedCountries){existed += item.val()};
         //}   
+
+            $( document ).ready(function(){
+        
+        $("#origin").val("{{mission.origin}}");
+    }
+    )
+
+textarea {
+        vertical-align: middle;
+        text-align: left;
+    } 

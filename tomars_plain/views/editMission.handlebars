@@ -1,0 +1,209 @@
+
+<template>
+    <div>
+        <label for="jobName"> Job Name: </label>
+        <input type="text" name="jobName">
+        <div class="textarea">
+            <label for="jobDescription">Job Description: </label>
+            <textarea cols="100" rows="3" name="jobDescription" align> </textarea>
+        </div>
+        <button type="button" class="delete" onclick="deleteParent($(this))">x</button>
+    </div>
+</template>
+<template>
+    <div>
+        <label for="title">title: </label>
+        <input type="text" name="title">
+        <label for="numberOfTitle">
+            Number:
+        </label>
+        <input type="number" name="numberOfTitle">
+        <button type="button" class="delete" onclick="deleteParent($(this))">x</button>
+    </div>
+</template>
+
+<div class="box">
+
+    <h2>Edit Mission</h2>
+
+    <form action="/putMission/{{mission.id}}" method="post" id="mission">
+        <fieldset>
+            <legend>Basic Information</legend>
+            <label for="missionName">Mission Name: </label>
+            <input type="text" name="missionName" value="{{mission.missionName}}" required>
+
+            <label for="countryOfOrigin">Country of Origin: </label>
+            <select id="origin" name="countryOfOrigin" required>
+                {{> countries}}
+            </select>
+
+            <div class="textarea">
+                <label for="missionDescription">Mission Description: </label>
+                <textarea cols="100" rows="5" name="missionDescription"
+                    placeholder="Description about this Mission" required>
+                    {{mission.missionDesc}}
+                    </textarea>
+            </div>
+        </fieldset>
+
+        <fieldset name="Allowed Countries">
+            <legend>Allowed Countries</legend>
+            <label>Add Country via the list and button: </label>
+            <select id="countries">
+                {{> countries}}
+            </select>
+            <button type="button" id="addCountry">Add</button>
+            <div id="allowedCountries">
+            {{#each mission.allowedCountries}}              
+            <input name='countriesAllowed' value="{{this}}" readonly>
+            <button type="button" class="delete" onclick="deleteCountry($(this))">x</button>
+            {{/each}}
+            </div>
+        </fieldset>
+
+        {{!-- <textarea id="allowedCountries" cols="100" rows="1" name="Countries Allowed"
+                    placeholder="Countries Allowed: Add or Delete via buttons" readonly></textarea> --}}
+        <fieldset name="Coordinator Information">
+            <legend>Coordinator Information: </legend>
+            <label for="name">Name: </label>
+            <input type="text" name="name" value="{{mission.coordinatorInfo.name}}" required>
+            <label for="phoneNumber">Phone Number: </label>
+            <input type="tel" name="phoneNumber" pattern="[0-9]+" value="{{mission.coordinatorInfo.phone}}">
+            <label for="contactEmail">Email:</label>
+            <input type="email" name="contactEmail" required value="{{mission.coordinatorInfo.email}}">
+        </fieldset>
+
+        <fieldset id="jobsNeeded" name="Jobs Needed" class="container-box">
+            <legend>Needed Jobs</legend>
+            <button type="button" id="addJob">Add</button>
+            {{#each mission.jobs}}
+            <div>
+                <label for="Job Name">Job Name: </label>
+                <input type="text" name="jobName" required value="{{@key}}">
+                <div class="textarea" required>
+                    <label for="jobDescription">Job Description: </label>
+                    <textarea cols="100" rows="3" name="jobDescription" > 
+                        {{this}}
+                    </textarea>
+                </div>
+            </div>
+            {{/each}}
+        </fieldset>
+
+        <fieldset id="employReq" name="Employment Requirements" class="container-box">
+            <legend>Employment Requirements</legend>
+            <button type="button" id="addReq">Add</button>
+            {{#each mission.empReq}}
+            <div>
+                <label for="title">title: </label>
+                <input type="text" name="title" required value="{{@key}}">
+                <label for="numberOfTitle">
+                    Number:
+                </label>
+                <input type="number" name="numberOfTitle" required value="{{this}}">
+            </div>
+            {{/each}}
+        </fieldset>
+
+
+        <fieldset>
+            <div>          
+                <label for="Cargo For">Cargo Requirements and Location: </label>
+                <select name="cargoFor" value="{{mission.cargoFor}}">
+                    <option >mission</option>
+                    <option>journey</option>
+                    <option>mission and journey</option>
+                </select>
+
+                <label for="location">Location: </label>
+                <input type="text" name="location" required value="{{mission.location}}">
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Progression</legend>
+            <label for="launchDate">Launch Date: </label>
+            <input type="date" name="launchDate" required value="{{cut mission.launchDate 10}}">
+            <label for="missionDuration">Duration of Mission(Month): </label>
+            <input type="number" name="missionDuration" min="1" required value="{{mission.duration}}">
+            <label for="missionStatus">Mission Status: </label>
+            <select name="missionStatus">
+                <option selected>Planning phase</option>
+                <option>Departed Earth</option>
+                <option>Landed on Mars</option>
+                <option>Mission in Progress</option>
+                <option>Returned to Earth</option>
+                <option>Mission Completed</option>
+            </select>
+        </fieldset>
+        <div>
+            <label for = "shuttleId">Selected shuttle: </label>
+            <input type="text" name="shuttleId" readonly value="{{mission.shuttleId}}">
+            {{#each mission.candidates}}
+            <label for = "candidates">Candidate: </label>
+            <input type="text" name="candidates" readonly value="{{this}}">
+            {{/each}}
+        </div>
+    </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        //alert("hello");
+        $("#origin option[value='{{mission.origin}}']").prop('selected',"selected");
+        $("#origin option:contains({{mission.origin}})").prop('selected',"selected");
+        $("select[name='cargoFor'] option:contains('{{mission.cargoFor}}')").prop('selected', "selected");
+        $("select[name='missionStatus'] option:contains('{{mission.status}}')").prop('selected', "selected");
+        //$("#origin").val("{{mission.origin}}");
+    }
+    )
+
+
+
+    var countries = [];
+    $("#addCountry").click(function () {
+
+        var allowedCountries = $("#allowedCountries")//.children().toString();
+
+        var countrySelected = $("#countries option:selected").text();
+        var added = $("<input name='countriesAllowed' readonly>").val(countrySelected).add('<button type="button" class="delete" onclick="deleteCountry($(this))">x</button>');
+        if (countries.includes(countrySelected)) {
+            alert("The selected country is already added")
+        } else {
+            $("#allowedCountries").append(added);
+            countries.push(countrySelected);
+
+        }
+        console.log(countries);
+    });
+
+    function deleteCountry(self) {
+        //console.log(countries);
+        var allowedCountries = $("#allowedCountries");
+        countries = countries.filter(function (val, index, arr) {
+            if (val != self.prev().val())
+                return val;
+        });
+        self.prev().remove();
+        self.remove();
+    };
+    function deleteParent(self) {
+        self.parent().remove();
+    }
+
+    $("#addJob").click(function () {
+        var jobsNeeded = $("#jobsNeeded");
+        var temp = $("template")[0];
+        console.log(temp.content);
+        jobsNeeded.append(temp.content.cloneNode(true));
+    })
+
+    $("#addReq").click(function () {
+        var employReq = $("#employReq");
+        var temp = $("template")[1];
+        console.log(temp.content);
+        employReq.append(temp.content.cloneNode(true));
+    })
+
+</script>

@@ -53,6 +53,10 @@
             display: inline-block;
             font-size: large;
         }
+        button:hover {
+        opacity: 0.8;
+        cursor: pointer;
+    }
     </style>
 </head>
 
@@ -60,7 +64,7 @@
     <div id="buttonBox">
         <button class="negativeBtn" onclick="location.href='/adminHome';">Back</button>
         <button class="positiveBtn" onclick="location.href='/mission/{{mission.id}}/shuttle/';">Select Shuttle</button>
-        {{!-- <button class="positiveBtn" onclick="location.href='/coordinatorHome';">Select Candidate</button> --}}
+        <button class="positiveBtn" onclick="location.href='/editMission/{{mission.id}}';">Edit</button>
     </div>
     <div class="box">
         <h2>Mission: {{mission.missionName}}</h2>

@@ -31,12 +31,15 @@
             margin: 20px;
         }
 
+        .positiveBtn {
+            background-color: #4CAF50;
+            color: white;
+
+        }
+
         .negativeBtn {
             background-color: red;
             color: white;
-            text-align: center;
-            display: inline-block;
-            font-size: large;
         }
 
         #buttonBox {
@@ -44,12 +47,24 @@
             right: 2%;
             top: 1%;
         }
+
+        button {
+            text-align: center;
+            display: inline-block;
+            font-size: large;
+            cursor: pointer;
+            
+        }
+        button:hover {
+        opacity: 0.8;
+        }
     </style>
 </head>
 
 <body>
     <div id="buttonBox">
         <button class="negativeBtn" onclick="location.href='/coordinatorHome';">Back</button>
+        <button class="positiveBtn" onclick="location.href='/editMission/{{mission.id}}';">Edit</button>
     </div>
     <div class="box">
         <h2>Mission: {{mission.missionName}}</h2>

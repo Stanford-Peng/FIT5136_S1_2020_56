@@ -188,7 +188,7 @@ app.get("/mission/:missionId/shuttle/:shuttleId",function(req,res){
         };
         axios.put("http://localhost:8080/api/mission/selectShuttle/"+req.params["missionId"],req.params["shuttleId"],config).then(function (response) {
             console.log("select res: "+response);
-            res.redirect("/adminHome");
+            res.send("You have successfully selected the shuttle, <a href='/adminHome'>Click to go back to the home page</a>")
           })
           .catch(function (error) {
             console.log(error);
@@ -252,13 +252,118 @@ app.get("/createMission",function(req,res){
     }
 })
 
+app.get("/editMission/:missionId",function(req,res){
+    if(!req.session["admin"]&&!req.session["coordinator"]){
+        res.sendFile(path.join(__dirname,'index.html'));
+    } else {
+        axios.get("http://localhost:8080/api/mission/"+req.params['missionId']).then(function(response){
+        console.log(response.data);
+        res.render("editMission",{"layout":"editMissionBar","mission":response.data});
+    }
+        ).catch(error => {
+            console.log(error);
+          })
+    }
+})
+
+app.post("/putMission/:missionId", function(req,res){
+    console.log(req.body);
+    if(!req.session["admin"]&&!req.session["coordinator"]){
+        res.redirect("/administrator");
+    } else { 
+        var mission;
+        var jobNames = req.body.jobName;
+        var jobDescription = req.body.jobDescription;
+        var jobs={};
+        var countries = [];
+        var candidates = [];
+        if(Array.isArray(jobNames)){
+            for (i = 0 ; i < jobNames.length; i++){
+                jobs[jobNames[i]] = jobDescription[i].replace("\r\n","").trim();
+            }
+        }else{
+            jobs[jobNames]=jobDescription.replace("\r\n","").trim();
+        }
+        var title = req.body.title;
+        var numberOfTitle = req.body.numberOfTitle;
+        var titles = {};
+        if(Array.isArray(title)){
+            for (i=0;i<title.length;i++){
+                titles[title[i]]= parseInt(numberOfTitle[i]);
+            }
+        }else{
+            titles[title]= parseInt(numberOfTitle);
+        }
+        var coordinatorInfo = {};
+        coordinatorInfo["name"]=req.body["name"];
+        coordinatorInfo["email"]=req.body["contactEmail"];
+        coordinatorInfo["phone"]= req.body["phoneNumber"];
+        if(!req.body.hasOwnProperty("countriesAllowed")){
+            countries= [null];
+
+        }else if(Array.isArray(req.body["countriesAllowed"])){
+            for (country of req.body["countriesAllowed"]){
+                countries.push(country);
+            }
+        }else{
+            countries=[req.body["countriesAllowed"]];
+        }
+
+        if(!req.body.hasOwnProperty("candidates")){
+            candidates= [null];
+
+        }else if(Array.isArray(req.body["candidates"])){
+            for (country of req.body["candidates"]){
+                countries.push(candidate);
+            }
+        }else{
+            countries=[req.body["candidates"]];
+        }
+
+
+        mission = {
+            id: req.params['missionId'],
+            missionName: req.body["missionName"],
+            missionDesc: req.body["missionDescription"].replace("\r\n","").trim(),
+            origin: req.body["countryOfOrigin"],
+            allowedCountries: countries,
+            coordinatorInfo: coordinatorInfo,
+            jobs: jobs,
+            launchDate: req.body["launchDate"]+'T00:00:00.000+0000',
+            duration: parseInt(req.body["missionDuration"]),
+            location: req.body["location"],
+            cargoFor: req.body["cargoFor"],
+            empReq: titles,
+            status: req.body["missionStatus"],
+            candidates: candidates,
+            shuttleId: req.body["shuttleId"]
+          };
+        axios.put("http://localhost:8080/api/mission/"+req.params['missionId'], mission).then(function(response){
+        console.log(response.data);
+        if(req.session["admin"]){
+        res.redirect("/mission/admin/"+req.params['missionId']);
+        }else{
+        res.redirect("/mission/"+req.params['missionId']);
+        }
+    }    
+    ).catch(error => {
+        console.log(error);
+      })
+    }
+
+})
+
 app.post("/postMission", function(req,res){
+    if (!req.session["coordinator"]) {
+        res.redirect("/coordinator");
+    } else {
     console.log(typeof(req.body));
     //var jsonContent = JSON.stringify(req.body);
     var mission;
     var jobNames = req.body.jobName;
     var jobDescription = req.body.jobDescription;
     var jobs={};
+    var countries=[];
     if(Array.isArray(jobNames)){
         for (i = 0 ; i < jobNames.length; i++){
             jobs[jobNames[i]] = jobDescription[i];
@@ -281,15 +386,21 @@ app.post("/postMission", function(req,res){
     coordinatorInfo["email"]=req.body["contactEmail"];
     coordinatorInfo["phone"]= req.body["phoneNumber"];
     if(!req.body.hasOwnProperty("countriesAllowed")){
-        req.body["countriesAllowed"]= [null];
+        countries= [null];
 
-    };
+    }else if(Array.isArray(req.body["countriesAllowed"])){
+        for (country of req.body["countriesAllowed"]){
+            countries.push(country);
+        }
+    }
+
+    ;
     mission = {
         id: -1,
         missionName: req.body["missionName"],
         missionDesc: req.body["missionDescription"],
         origin: req.body["countryOfOrigin"],
-        allowedCountries: req.body["countriesAllowed"],
+        allowedCountries: countries,
         coordinatorInfo: coordinatorInfo,
         jobs: jobs,
         launchDate: req.body["launchDate"]+'T00:00:00.000+0000',
@@ -309,6 +420,7 @@ app.post("/postMission", function(req,res){
       .catch(function (error) {
         console.log(error);
       });
+    }
 
 })
 
