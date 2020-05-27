@@ -72,3 +72,26 @@ textarea {
         vertical-align: middle;
         text-align: left;
     } 
+
+
+$(document).ready(function(){
+
+  $("input[name='username']").keyup(function(){
+
+    alert("test");
+    $.get("http://localhost:8080/api/user/hasDuplicateUsername", $("input[name='username']").val(), function(data){
+        var message = $("#message");
+        if(data==0){
+            message.text("Username already taken");
+        }
+        else{
+            message.text("Username available");
+        }
+    }, 'jsonp')
+  }
+)
+});
+
+   headers: {
+    'X-CSRFToken': $.cookie('csrftoken')
+  },

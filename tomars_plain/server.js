@@ -179,7 +179,6 @@ app.get("/mission/:missionId/shuttle/:shuttleId",function(req,res){
     } else {
         var shuttleId = parseFloat(req.params["shuttleId"]);
         // console.log(shuttleId);
-
         var config = {
             headers: {
                 'Content-Type': 'application/json'
@@ -441,6 +440,11 @@ app.get("/mission/:missionId", function (req, res) {
 }
 )
 
+
+app.get("/register",function(req,res){
+    res.render("register",{"layout":null});
+
+})
 
 
 

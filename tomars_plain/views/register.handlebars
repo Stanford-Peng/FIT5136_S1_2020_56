@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Candidate Sign up</title>
+    <link rel="stylesheet" type="text/css" href="public/login.css">
+</head>
+<body>
+<div id = "login">
+
+    <h2>Register</h2>
+    <label id="message"></label>
+    <form action="/registerCandidate" method="post">
+            <label for="username"><b>Username: </b></label>
+            <input type="text" name="username" placeholder="login">
+
+            <label for="password1"><b>Password: </b></label>
+            <input type="password" name="password1" placeholder="password">
+
+            <label for="password2"><b>Confirm Password: </b></label>
+            <input type="password" name="password2" placeholder="password">
+
+            
+    </form>
+    <button class="positiveBtn" onclick="check()">Sign up</button>
+    <a href="/">Go back</a>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    //$("button").remove();
+    //$("input", "textarea").prop("readonly": true, "tabIndex": -1);
+    
+
+
+$(document).ready(function(){
+
+  $("input[name='username']").keyup(function(){
+alert($("input[name='username']").val());
+console.log(typeof($("input[name='username']").val()))
+
+    $.ajax(
+        {
+   type: 'GET',
+   crossDomain: true,
+   contentType:"application/json",
+   dataType: 'jsonp',
+   processData:false,
+   url: 'http://localhost:8080/api/user/hasDuplicateUsername',
+   data: JSON.stringify($("input[name='username']").val()),
+   success: function(data){
+        var message = $("#message");
+        if(data==0){
+            message.text("Username already taken");
+        }
+        else{
+            message.text("Username available");
+        }
+    }
+    }
+    )
+
+  }
+)
+
+});
+function check(){
+    var username = $("input[name='username']").val();
+    var pwd1 = $("input[name='password1']").val();
+    var pwd2 = $("input[name='password2']").val();
+    if(pwd1===pwd2){
+        //$.ajax()
+    }
+    
+}
+
+
+</script>
+
+</body>
+
+</html>
