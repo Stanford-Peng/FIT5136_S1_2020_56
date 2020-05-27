@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        .box {
+            border-radius: 10px;
+            border-width: 1px;
+            border-style: solid;
+            padding: 10px;
+            margin: 40px;
+        }
+
+        .container-box {
+            display: grid;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+
+        input,
+        select,
+        fieldset {
+            margin: 20px;
+        }
+
+        span {
+            margin: 20px;
+        }
+
+        .positiveBtn {
+            background-color: #4CAF50;
+            color: white;
+
+        }
+
+        .negativeBtn {
+            background-color: red;
+            color: white;
+        }
+
+        #buttonBox {
+            position: fixed;
+            right: 2%;
+            top: 1%;
+        }
+
+        button {
+            text-align: center;
+            display: inline-block;
+            font-size: large;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="buttonBox">
+        <button class="negativeBtn" onclick="location.href='/adminHome';">Back</button>
+        <button class="positiveBtn" onclick="location.href='/mission/{{mission.id}}/shuttle/';">Select Shuttle</button>
+        {{!-- <button class="positiveBtn" onclick="location.href='/coordinatorHome';">Select Candidate</button> --}}
+    </div>
+    <div class="box">
+        <h2>Mission: {{mission.missionName}}</h2>
+
+            <fieldset>
+                <legend>Basic Information</legend>
+                <label for="missionName">Mission Name: </label>
+                <span name="missionName">
+                    {{mission.missionName}}
+                </span>
+
+                <label for="countryOfOrigin">Country of Origin: </label>
+                <span name="countryOfOrigin">
+                    {{mission.origin}}
+                </span>
+
+                <div>
+                    <label for="missionDescription">Mission Description: </label>
+                    <p name="missionDescription">
+                        {{mission.missionDesc}}
+                    </p>
+                </div>
+            </fieldset>
+
+            <fieldset name="Allowed Countries">
+                <legend>Allowed Countries</legend>
+                {{!-- <button type="button" id="deleteCountry">Delete</button> --}}
+                <div id="allowedCountries">
+                    {{mission.allowedCountries}}
+                </div>
+            </fieldset>
+
+            {{!-- <textarea id="allowedCountries" cols="100" rows="1" name="Countries Allowed"
+                    placeholder="Countries Allowed: Add or Delete via buttons" readonly></textarea> --}}
+            <fieldset name="Coordinator Information">
+                <legend>Coordinator Information: </legend>
+                <label for="Name">Name: </label>
+                <p name="Name"> {{mission.coordinatorInfo.name}}</p>
+                <label for="phoneNumber">Phone Number: </label>
+                <p name="phoneNumber"> {{mission.coordinatorInfo.phone}}</p>
+                <label for="contactEmail">Email: </label>
+                <p name="contactEmail"> {{mission.coordinatorInfo.email}}</p>
+            </fieldset>
+
+            <fieldset id="jobsNeeded" name="Jobs Needed" class="container-box">
+                <legend>Needed Jobs</legend>
+
+                <div>
+                    {{#each mission.jobs}}
+                    <div>
+                        <label for="Job Name">Job Name: </label>
+                        <span>{{@key}} </span>
+
+                        <label for="jobDescription">Job Description: </label>
+                        <span name="jobDescription"> {{this}} </span>
+                    </div>
+                    {{/each}}
+                </div>
+
+            </fieldset>
+
+            <fieldset id="employReq" name="Employment Requirements" class="container-box">
+                <legend>Employment Requirements</legend>
+                <div>
+                    {{#each mission.empReq}}
+                    <div>
+                        <label for="title">title: </label>
+                        <span name="title"> {{@key}}</span>
+                        <label for="numberOfTitle">
+                            Number:
+                        </label>
+                        <span name="numberOfTitle">{{this}}</span>
+                    </div>
+                    {{/each}}
+                    </>
+            </fieldset>
+
+
+            <fieldset>
+                <legend>Cargo Requirements and Location: </legend>
+
+                <label for="Cargo For">Cargo Requirements</label>
+                <span name="cargoFor">
+                    {{mission.cargoFor}}
+                </span>
+                <div>
+                    <label for="location">Location: </label>
+                    <span name="location">{{mission.location}}</span>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Progression</legend>
+                <label for="launchDate">Launch Date: </label>
+                <span name="launchDate">{{cut mission.launchDate 10}}</span>
+
+                <label for="missionDuration">Duration of Mission(Month): </label>
+                <span name="missionDuration">{{mission.duration}}</span>
+
+                <label for="missionStatus">Mission Status: </label>
+                <span name="missionStatus">
+                    {{ mission.status }}
+                </span>
+            </fieldset>
+
+            <div>
+                <label for="shuttle">Selected Shuttle: </label>
+                <span name = "shuttle">
+                    {{#if mission.shuttleId}}
+                    {{mission.shuttleId}}
+                    {{/if}}
+                </span>
+
+            </div>
+
+    </>
+    {{!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> --}}
+    <script type="text/javascript">
+        //$("button").remove();
+        //$("input", "textarea").prop("readonly": true, "tabIndex": -1);
+
+    </script>
+
+</body>
+
+</html>

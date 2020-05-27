@@ -1,4 +1,61 @@
 <body>
+  <div id="box">
+    <button class="negativeBtn" onclick="location.href='/adminLogout';">Log out</button>
+  </div>
+
+  
+
+  <div id="missionList">
+    <h3>Missions in Progress<h3>
+  {{#each missions}}
+    <div class="mission">
+    <a href="/mission/admin/{{this.id}}">
+      {{this.missionName}}
+    </a>
+    </div>
+  {{/each}}    
+  </div>
+
+<style>
+
+#missionList {
+    border-radius: 50px;
+    border: 3px solid black;
+    width: 300px;
+    margin: auto;
+    padding: 10px;
+    margin-top: 100px;
+    text-align: center;
+}
+
+.mission{
+  margin:15px;
+}
+.positiveBtn {
+    background-color: #4CAF50;
+    color: white;
+
+  }
+.negativeBtn {
+    background-color: red;
+    color: white;   
+  }
+#box{
+    position:fixed;
+    right:2%;
+    top: 2%;
+}
+
+button{
+    text-align: center;
+    display: inline-block;
+    font-size: large;
 
 
+}
+button:hover {
+    opacity: 0.8;
+}
+
+</style>
 </body>

@@ -1,0 +1,71 @@
+<body>
+    <h3>Shuttles</h3>
+    <div id="shuttleList">
+        {{#each shuttles}}
+            <fieldset class="shuttle">
+                <legend>{{this.name}}</legend>
+                <label for="manufactureYear">Manufacture Year: </label>
+                <span name="manufactureYear">
+                    {{cut this.manufactureYear 10}}
+                </span>
+
+                <label for="fuelCap">Fuel Capacity(litre): </label>
+                <span name="fuelCap">
+                    {{this.fuelCap}}
+                </span>
+
+                <label for="passengerCap">Passenger Capacity: </label>
+                <span name="passengerCap">
+                    {{this.passengerCap}}
+                </span>
+
+                <label for="cargoCap">Cargo Capacity(kg): </label>
+                <span name="cargoCap">
+                    {{this.cargoCap}}
+                </span>
+
+                <label for="speed">Speed(km/h): </label>
+                <span name="speed">
+                    {{this.speed}}
+                </span>
+
+                <label for="origin">Origin: </label>
+                <span name="origin">
+                    {{this.origin}}
+                </span>
+
+                <button type="button" class="select" onclick="select({{this.id}})" >Select for Mission {{this.missionId}}</button>
+            </fieldset>
+            
+        {{/each}}  
+
+    </div>
+    <style>
+        span{
+            display: inline-block;
+            width: 200px;
+        }
+        fieldset{
+            margin:10px;
+            width:700px;
+            text-align: center;
+            display: inline-block;
+        }
+        h3{
+            text-align: center;
+        }
+        #shuttleList{
+            text-align: center;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function select(id){
+            if(confirm("Confirm your selection")){
+                window.location.href = "/mission/{{missionId}}/shuttle/"+id;
+                }
+        }
+
+    </script>
+
+</body>
