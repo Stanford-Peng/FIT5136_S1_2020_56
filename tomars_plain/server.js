@@ -20,6 +20,8 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
+// let axiosDefaults = require('axios/lib/defaults');
+// axiosDefaults.baseURL = 'http://locahost:8080/';
 var hbs = handlebars.create({});
 //express.urlencoded([extended]);
 var limitLength = function(content, maxLength){
@@ -102,7 +104,7 @@ app.post("/coordinatorLogin", function(req,res){
 
 app.get("/adminHome", function(req,res){
     if(!req.session["admin"]){
-        res.redirect("/adminLogin");
+        res.redirect("/administrator");
     } else {
         var missions=[];
         axios.get("http://localhost:8080/api/mission").then(function(response){
@@ -132,7 +134,7 @@ app.get("/adminHome", function(req,res){
 app.get("/mission/admin/:missionId", function (req, res) {
     console.log(req.params["missionName"]);
     if (!req.session["admin"]) {
-        res.redirect("/adminLogin");
+        res.redirect("/administrator");
     } else {
         var mission;
         axios.get("http://localhost:8080/api/mission/"+req.params['missionId']).then(function(response){
@@ -145,6 +147,55 @@ app.get("/mission/admin/:missionId", function (req, res) {
     }
 }
 )
+
+app.get("/mission/:id/shuttle/",function(req,res){
+    if (!req.session["admin"]) {
+        res.redirect("/administrator");
+    } else {
+        var missionId = req.params['id'];
+        //missionId["id"] = 
+        var shuttles = [];
+        console.log(missionId);
+        axios.get("http://localhost:8080/api/shuttle").then(function(response){
+            for (item of response.data)
+            {                          
+                item['missionId'] = req.params['id'];
+                console.log(item);
+                shuttles.push(item);
+                
+            };
+            res.render("shuttleList",{layout:"adminBar", 'shuttles':shuttles, "missionId":missionId});
+            console.log("shuttles:"+shuttles);
+          }).catch(error => {
+            console.log(error)
+          })
+    }
+})
+
+app.get("/mission/:missionId/shuttle/:shuttleId",function(req,res){
+    console.log(req.params);
+    if (!req.session["admin"]) {
+        res.redirect("/administrator");
+    } else {
+        var shuttleId = parseFloat(req.params["shuttleId"]);
+        // console.log(shuttleId);
+
+        var config = {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            responseType: 'text'
+        };
+        axios.put("http://localhost:8080/api/mission/selectShuttle/"+req.params["missionId"],req.params["shuttleId"],config).then(function (response) {
+            console.log("select res: "+response);
+            res.redirect("/adminHome");
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+
+})
 
 app.get("/coordinatorHome", function(req,res){
     if(!req.session["coordinator"]){
@@ -173,6 +224,15 @@ app.get("/coordinatorHome", function(req,res){
     // console.log(req.session["admin"]);
     // console.log(req.session["coordinator"]);
     // console.log(req.session["id"]);
+})
+
+app.get("/adminLogout",function(req,res){
+    if(req.session["admin"]){
+        delete req.session["admin"]; //not thorough
+        res.redirect("/administrator");
+    } else {
+        res.send("You have already logged out, <a href='/administrator'>Click to go to log in</a>")
+    }
 })
 
 app.get("/coordinatorLogout",function(req,res){
@@ -253,7 +313,7 @@ app.post("/postMission", function(req,res){
 })
 
 app.get("/mission/:missionId", function (req, res) {
-    console.log(req.params["missionName"]);
+    //console.log(req.params["missionName"]);
     if (!req.session["coordinator"]) {
         res.redirect("/coordinator");
     } else {

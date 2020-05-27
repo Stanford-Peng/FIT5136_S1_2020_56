@@ -58,14 +58,13 @@
 
 <body>
     <div id="buttonBox">
-        <button class="negativeBtn" onclick="location.href='/coordinatorHome';">Back</button>
-        <button class="positiveBtn" onclick="location.href='/shuttle';">Select Shuttle</button>
-        <button class="positiveBtn" onclick="location.href='/coordinatorHome';">Select Candidate</button>
+        <button class="negativeBtn" onclick="location.href='/adminHome';">Back</button>
+        <button class="positiveBtn" onclick="location.href='/mission/{{mission.id}}/shuttle/';">Select Shuttle</button>
+        {{!-- <button class="positiveBtn" onclick="location.href='/coordinatorHome';">Select Candidate</button> --}}
     </div>
     <div class="box">
         <h2>Mission: {{mission.missionName}}</h2>
 
-        <form action="/postMission" method="post" id="mission">
             <fieldset>
                 <legend>Basic Information</legend>
                 <label for="missionName">Mission Name: </label>
@@ -166,8 +165,18 @@
                     {{ mission.status }}
                 </span>
             </fieldset>
-        </form>
-    </div>
+
+            <div>
+                <label for="shuttle">Selected Shuttle: </label>
+                <span name = "shuttle">
+                    {{#if mission.shuttleId}}
+                    {{mission.shuttleId}}
+                    {{/if}}
+                </span>
+
+            </div>
+
+    </>
     {{!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> --}}
     <script type="text/javascript">
         //$("button").remove();
