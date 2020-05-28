@@ -10,11 +10,15 @@ const app= express();
 const axios = require("axios");
 
 app.use("/public",express.static(path.join(__dirname,"public")));
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.raw());
+
 app.engine("handlebars",handlebars());
 app.set("view engine", 'handlebars');
 app.set('views', path.join(__dirname,'views'));
-app.use(bodyParser.json())
+
+
 app.use(session({
     secret:"secret code",
     resave: true,
@@ -23,7 +27,7 @@ app.use(session({
 // let axiosDefaults = require('axios/lib/defaults');
 // axiosDefaults.baseURL = 'http://locahost:8080/';
 var hbs = handlebars.create({});
-//express.urlencoded([extended]);
+// express.urlencoded([extended]);
 var limitLength = function(content, maxLength){
     if(content.length > maxLength){
         content = content.substring(0,maxLength) + "...";
@@ -172,6 +176,31 @@ app.get("/mission/:id/shuttle/",function(req,res){
     }
 })
 
+app.post("/check",function(req,res){
+    console.log(req.body);
+    var config = {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        responseType: 'text'
+    };
+    axios({
+        method: 'get',
+        responseType: 'text',
+        url: "http://localhost:8080/api/user/hasDuplicateUsername",
+        headers: {
+            'Content-Type': 'application/json'
+        }, 
+        data: req.body["username"]
+      }).then(function(response){
+          console.log(response.data);
+        res.json({"exist":response.data});
+      }).catch(error => {
+        console.log(error)});
+
+
+})
+
 app.get("/mission/:missionId/shuttle/:shuttleId",function(req,res){
     console.log(req.params);
     if (!req.session["admin"]) {
@@ -186,7 +215,7 @@ app.get("/mission/:missionId/shuttle/:shuttleId",function(req,res){
             responseType: 'text'
         };
         axios.put("http://localhost:8080/api/mission/selectShuttle/"+req.params["missionId"],req.params["shuttleId"],config).then(function (response) {
-            console.log("select res: "+response);
+            console.log("select res: "+response.data);
             res.send("You have successfully selected the shuttle, <a href='/adminHome'>Click to go back to the home page</a>")
           })
           .catch(function (error) {

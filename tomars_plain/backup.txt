@@ -95,3 +95,38 @@ $(document).ready(function(){
    headers: {
     'X-CSRFToken': $.cookie('csrftoken')
   },
+
+
+    $("input[name='username']").keyup(function(){
+alert($("input[name='username']").val());
+console.log(typeof($("input[name='username']").val()))
+
+    $.ajax(
+        {
+   type: 'GET',
+   crossDomain: true,
+   contentType:"application/json",
+   dataType: 'jsonp text',
+   processData:false,
+   url: 'http://localhost:8080/api/user/hasDuplicateUsername',
+   data: JSON.stringify($("input[name='username']").val()),
+   success: function(data){
+        var message = $("#message");
+        if(data==0){
+            message.text("Username already taken");
+        }
+        else{
+            message.text("Username available");
+        }
+    }
+    }
+    )
+
+  }
+
+
+      axios.get("http://localhost:8080/api/user/hasDuplicateUsername", req.body["username"], config).then(function(response){
+            res.send(response.data);
+          }).catch(error => {
+            console.log(error)
+          })

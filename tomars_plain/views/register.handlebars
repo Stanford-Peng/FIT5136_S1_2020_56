@@ -10,9 +10,10 @@
 <div id = "login">
 
     <h2>Register</h2>
-    <label id="message"></label>
-    <form action="/registerCandidate" method="post">
+    
+    <form action="/registerCandidate" method="post">           
             <label for="username"><b>Username: </b></label>
+            <label id="message" style="color:red;display:block;"></label>
             <input type="text" name="username" placeholder="login">
 
             <label for="password1"><b>Password: </b></label>
@@ -35,32 +36,18 @@
 
 
 $(document).ready(function(){
-
   $("input[name='username']").keyup(function(){
-alert($("input[name='username']").val());
-console.log(typeof($("input[name='username']").val()))
-
-    $.ajax(
-        {
-   type: 'GET',
-   crossDomain: true,
-   contentType:"application/json",
-   dataType: 'jsonp',
-   processData:false,
-   url: 'http://localhost:8080/api/user/hasDuplicateUsername',
-   data: JSON.stringify($("input[name='username']").val()),
-   success: function(data){
+        //console.log(typeof($("input[name='username']").val()))
+        var body = $("input[name='username']").val();
+        $.post("/check",{"username" : body},function(data){
         var message = $("#message");
-        if(data==0){
+        if(data["exist"]==0){
             message.text("Username already taken");
         }
         else{
             message.text("Username available");
         }
-    }
-    }
-    )
-
+        })
   }
 )
 
