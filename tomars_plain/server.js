@@ -177,7 +177,7 @@ app.get("/mission/:id/shuttle/",function(req,res){
 })
 
 app.post("/check",function(req,res){
-    console.log(req.body);
+    //console.log(req.body);
     var config = {
         headers: {
             'Content-Type': 'application/json'
@@ -193,12 +193,37 @@ app.post("/check",function(req,res){
         }, 
         data: req.body["username"]
       }).then(function(response){
-          console.log(response.data);
+        //console.log(response.data);
         res.json({"exist":response.data});
       }).catch(error => {
         console.log(error)});
 
 
+})
+
+app.post("/signUp",function(req,res){
+    console.log(req.body);
+    var body ={
+    "userName": req.body.username,
+    "password": req.body.password,
+    "profile": null,
+    "userId": -1
+    }
+    axios.post("http://localhost:8080/api/user", body).then(function(response) { 
+        if(!response.data)
+        {
+            res.json({"success" : "true"});
+        }
+    }).catch(function (error) {
+        console.log(error);
+    })
+
+}    
+)
+
+app.post("/signin",function(req,res){
+    console.log(req.body);
+    
 })
 
 app.get("/mission/:missionId/shuttle/:shuttleId",function(req,res){

@@ -21,7 +21,6 @@
 
             <label for="password2"><b>Confirm Password: </b></label>
             <input type="password" name="password2" placeholder="password">
-
             
     </form>
     <button class="positiveBtn" onclick="check()">Sign up</button>
@@ -52,12 +51,28 @@ $(document).ready(function(){
 )
 
 });
+
 function check(){
     var username = $("input[name='username']").val();
     var pwd1 = $("input[name='password1']").val();
     var pwd2 = $("input[name='password2']").val();
-    if(pwd1===pwd2){
+    
+    var message = $("#message").text();
+    console.log(message+" "+username+pwd1+pwd2);
+    if(message === "Username already taken"){
+         alert("Duplicate username");
+    }
+    else if(pwd1===pwd2 ){
         //$.ajax()
+        //alert("test");
+        $.post("/signUp",{"username" : username, "password": pwd1, profile : null,"userId":-1},function(data){
+            if(data["success"]==="true"){
+                alert("Sign up successfully");
+                window.location.href = "/candidate";
+            }
+        })
+    }else{
+        alert("Inconsistent password");
     }
     
 }
