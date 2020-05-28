@@ -1,12 +1,192 @@
 <body>
   <div id="box">
+    <span>Welcome! {{user.userName}}</span>
     <button class="negativeBtn" onclick="location.href='/candidateLogout';">Log out</button>
-    <button class="positiveBtn" onclick="location.href='/message';">Edit Profile</button>
-    <button class="positiveBtn" onclick="location.href='/editProfile';">Message</button>
+    <button class="positiveBtn" onclick="location.href='/message';">Message</button>
+    <button class="positiveBtn" onclick="location.href='/editProfile';">Edit Profile</button>
   </div>
 
   <div id="profile">
-  
-  </div>
+    <fieldset>
+                <legend>Profile</legend>
+                
+                <label for="name">name: </label>
+                
+                <span name="manufactureYear">
+                  {{#if user.profile.name}}
+                    {{user.profile.name}}
+                  {{else}}
+                      null
+                  {{/if}}
+                </span>
 
-  </body>
+                <label for="dob">Date of birth: </label>
+                <span name="dob">
+                  {{#if user.profile.dob}}
+                    {{cut user.profile.dob 10}}
+                  {{else}}
+                      null
+                  {{/if}}
+                </span>
+
+                <label for="street">Address Street: </label>
+                <span name="street">
+                  {{#if user.profile.street}}
+                    {{user.profile.street}}
+                  {{else}}
+                      null
+                  {{/if}}
+                </span>
+
+                <label for="city">Address City: </label>
+                <span name="city">
+                  {{#if user.profile.city}}
+                    {{user.profile.city}}
+                  {{else}}
+                      null
+                  {{/if}}
+                </span>
+
+                <label for="idNumber">ID Number: </label>
+                <span name="idNumber">
+                  {{#if user.profile.idNumber}}
+                    {{user.profile.idNumber}}
+                  {{else}}
+                      null
+                  {{/if}}
+                </span>
+
+                <label for="idType">ID Type: </label>
+                <span name="idType">
+                  {{#if user.profile.idType}}
+                    {{user.profile.idType}}
+                  {{else}}
+                      null
+                  {{/if}}
+                </span>
+
+                <label for="gender">Gender: </label>
+                <span name="gender">
+                  {{#if user.profile.gender}}
+                    {{user.profile.gender}}
+                  {{else}}
+                      null
+                  {{/if}}
+                </span>
+
+                <label for="allergies">Allergies: </label>
+                <span name="allergies">
+                  {{#if user.profile.allergies}}
+                    {{slash user.profile.allergies}}
+                  {{else}}
+                      null
+                  {{/if}}
+                </span>
+
+                <label for="foodPref">Food Preference: </label>
+                <span name="foodPref">
+                  {{#if user.profile.foodPref}}
+                    {{slash user.profile.foodPref}}
+                  {{else}}
+                      null
+                  {{/if}}
+                </span>
+
+                <label for="qualifications">Qualifications: </label>
+                <span name="qualifications">
+                  {{#if user.profile.qualifications}}
+                    {{user.profile.qualifications}}
+                  {{else}}
+                      null
+                  {{/if}}
+                </span>
+
+
+                <label for="workExp">Work Experience: </label>
+                <span name="workExp">
+                  {{#if user.profile.workExp}}
+                      {{user.profile.workExp}} years
+                  {{else}}
+                      null
+                  {{/if}}
+                </span>
+
+                <label for="occupations">Occupations: </label>
+                <span name="occupations">
+                  {{#if user.profile.occupations}}
+                    {{slash user.profile.occupations}}
+                  {{else}}
+                      null
+                  {{/if}}
+                </span>                
+
+
+                <label for="computerSkill">Computer Skills: </label>
+                <span name="computerSkill">
+                {{#if user.profile.computerSkill}}
+                  {{slash user.profile.computerSkill}}
+                {{else}}
+                    null
+                {{/if}}
+                </span>
+
+
+                <label for="languages">Languages: </label>
+                <span name="languages">
+                {{#if user.profile.languages}}
+                  {{slash user.profile.languages}}
+                {{else}}
+                    null
+                {{/if}}
+                </span>
+                
+
+
+
+            </fieldset>
+
+  </div>
+  <style>
+    .positiveBtn {
+      background-color: #4CAF50;
+      color: white;
+
+    }
+
+    .negativeBtn {
+      background-color: red;
+      color: white;
+    }
+
+    #box {
+      position: fixed;
+      right: 2%;
+      top: 2%;
+    }
+
+    button {
+      text-align: center;
+      display: inline-block;
+      font-size: large;
+
+
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+
+    fieldset {
+      margin:auto;
+      width: 800px;
+      margin-top: 200px;
+      text-align: center;
+      
+    }
+
+    span{
+      display: block;
+      margin:20px;
+    }
+  </style>
+</body>

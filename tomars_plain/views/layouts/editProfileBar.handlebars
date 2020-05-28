@@ -44,20 +44,29 @@
 
     }
 
-    button {
+    fieldset{
+        text-align: center;
+        width:700px;
+        margin-top: 500px;
+        margin:auto;
+    }
+
+    button {        
         background-color: white;
         color: black;
         cursor: pointer;
     }
 
     .positiveBtn {
+        margin-top: 50px;
         background-color: #4CAF50;
         color: white;
         border: none;
         padding: 14px 20px;
         display: block;
-        margin: auto;
+        text-align: center;
         width: 20%;
+        margin:auto;
         font-size: larger;
     }
 
@@ -80,9 +89,9 @@
 </head>
 <body>
 
-<button class="negativeBtn" onclick="location.href='/mission/{{who}}/{{mission.id}}';">Cancel</button>
+<button class="negativeBtn" onclick="location.href='/candidateHome';">Cancel</button>
 {{{body}}}
-<button class="positiveBtn" type="submit" form="mission" >Confirm</button>
+<button class="positiveBtn" type="submit" form="profile" >Confirm</button>
 
 </body>
 </html>

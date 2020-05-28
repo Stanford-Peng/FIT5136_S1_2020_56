@@ -1,5 +1,6 @@
 <body>
     <h3>Shuttles</h3>
+    <button class="negativeBtn" onclick="location.href='/mission/admin/{{shuttles.1.missionId}}';">Cancel</button>
     <div id="shuttleList">
         {{#each shuttles}}
             <fieldset class="shuttle">
@@ -41,6 +42,38 @@
 
     </div>
     <style>
+        button {
+        background-color: white;
+        color: black;
+        cursor: pointer;
+    }
+
+    .positiveBtn {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 14px 20px;
+        display: block;
+        margin: auto;
+        width: 20%;
+        font-size: larger;
+    }
+
+    .negativeBtn {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 14px 20px;
+        width: 10%;
+        display: inline-block;
+        font-size: larger;
+        margin-left: 80%;
+
+    }
+
+    button:hover {
+        opacity: 0.8;
+    }
         span{
             display: inline-block;
             width: 200px;

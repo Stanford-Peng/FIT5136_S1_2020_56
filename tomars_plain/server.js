@@ -19,11 +19,15 @@ app.set("view engine", 'handlebars');
 app.set('views', path.join(__dirname,'views'));
 
 
+
+
+
 app.use(session({
     secret:"secret code",
     resave: true,
     saveUninitialized: true
 }))
+//app.use(require('flash')());
 // let axiosDefaults = require('axios/lib/defaults');
 // axiosDefaults.baseURL = 'http://locahost:8080/';
 var hbs = handlebars.create({});
@@ -39,7 +43,24 @@ var limitLength = function(content, maxLength){
 var cut = function(content,length){
     return content.substring(0,length);
 }
+var slash = function(content){
+
+    var result = "";
+    if(Array.isArray(content)){
+        for (item of content){
+            result = result + item +"/ "
+        }
+        result=result.substring(0,result.length-2)
+    }else{
+        result = result.replace(",","/");
+        return result;
+    }
+    
+
+    return result;
+};
 hbs.handlebars.registerHelper("cut",cut);
+hbs.handlebars.registerHelper("slash",slash);
 
 app.get("/", function (req, res){
     res.sendFile(path.join(__dirname,'index.html'))
@@ -223,8 +244,71 @@ app.post("/signUp",function(req,res){
 
 app.post("/signin",function(req,res){
     console.log(req.body);
-    
+    var body={
+        "userName": req.body.username,
+        "password": req.body.password,
+        "profile": null,
+        "userId": 3
+    }
+    axios.post("http://localhost:8080/api/user/candidateLogin", body).then(function(response) { 
+        console.log(response.data);
+        if(response.data !== -1)
+        {
+            req.session["candidate"]=response.data;
+            res.redirect("/candidateHome");
+
+        }
+        else{
+            //req.flash("Fail");
+            res.send("Password or username incorrect, <a href='/candidate'>Click to go to log in</a>");
+        }
+    }).catch(function (error) {
+        console.log(error);
+    })
+
 })
+
+app.get("/candidateHome",function(req,res){
+    if (!req.session["candidate"]) {
+        res.redirect("/candidate");
+    } else {
+        console.log(req.session["candidate"]);
+        axios.get("http://localhost:8080/api/user/"+req.session["candidate"]).then(
+            function(response){
+                res.render("candidateHome",{layout:null, "user": response.data});
+            }
+        ).catch(function (error) {
+            console.log(error);
+        })
+        
+
+    }
+
+})
+
+app.get("/candidateLogout",function(req,res){
+    delete req.session["candidate"];
+    res.redirect("/candidate");
+})
+
+app.get("/editProfile",function(req,res){
+    if (!req.session["candidate"]) {
+        res.redirect("/candidate");
+    } else {
+        console.log(req.session["candidate"]);
+        axios.get("http://localhost:8080/api/user/"+req.session["candidate"]).then(
+            function(response){
+                res.render("editProfile",{"layout":"editProfileBar", "user": response.data});
+            }
+        ).catch(function (error) {
+            console.log(error);
+        })
+        
+
+    }
+})
+
+
 
 app.get("/mission/:missionId/shuttle/:shuttleId",function(req,res){
     console.log(req.params);
@@ -305,19 +389,28 @@ app.get("/createMission",function(req,res){
     }
 })
 
-app.get("/editMission/:missionId",function(req,res){
-    if(!req.session["admin"]&&!req.session["coordinator"]){
-        res.sendFile(path.join(__dirname,'index.html'));
-    } else {
-        axios.get("http://localhost:8080/api/mission/"+req.params['missionId']).then(function(response){
-        console.log(response.data);
-        res.render("editMission",{"layout":"editMissionBar","mission":response.data});
-    }
-        ).catch(error => {
+app.get("/editMission/:missionId", function (req, res) {
+    if (!req.session["admin"] && !req.session["coordinator"]) {
+        res.sendFile(path.join(__dirname, 'index.html'));
+    } else if (req.session["admin"]) {
+        axios.get("http://localhost:8080/api/mission/" + req.params['missionId']).then(function (response) {
+            console.log(response.data);
+            res.render("editMission", { "layout": "editMissionBar", "mission": response.data, "who": req.session["admin"] })
+        }).catch(error => {
             console.log(error);
-          })
+        });
+    } else {
+        axios.get("http://localhost:8080/api/mission/" + req.params['missionId']).then(function (response) {
+            console.log(response.data);
+            res.render("editMission", { "layout": "editMissionBar", "mission": response.data, "who": req.session["coordinator"] });
+        }).catch(error => {
+            console.log(error);
+        })
+
     }
-})
+
+}
+)
 
 app.post("/putMission/:missionId", function(req,res){
     console.log(req.body);
@@ -396,7 +489,7 @@ app.post("/putMission/:missionId", function(req,res){
         if(req.session["admin"]){
         res.redirect("/mission/admin/"+req.params['missionId']);
         }else{
-        res.redirect("/mission/"+req.params['missionId']);
+        res.redirect("/mission/coordinator/"+req.params['missionId']);
         }
     }    
     ).catch(error => {
@@ -477,7 +570,7 @@ app.post("/postMission", function(req,res){
 
 })
 
-app.get("/mission/:missionId", function (req, res) {
+app.get("/mission/coordinator/:missionId", function (req, res) {
     //console.log(req.params["missionName"]);
     if (!req.session["coordinator"]) {
         res.redirect("/coordinator");

@@ -130,3 +130,49 @@ console.log(typeof($("input[name='username']").val()))
           }).catch(error => {
             console.log(error)
           })
+
+
+
+          <style>
+        .positiveBtn {
+            background-color: #4CAF50;
+            color: white;
+
+        }
+
+        .negativeBtn {
+            background-color: red;
+            color: white;
+        }
+
+        #box {
+            position: fixed;
+            right: 2%;
+            top: 2%;
+        }
+
+        button {
+            text-align: center;
+            display: inline-block;
+            font-size: large;
+
+
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        fieldset {
+            margin: auto;
+            width: 800px;
+            margin-top: 200px;
+            text-align: center;
+
+        }
+
+        span {
+            display: block;
+            margin: 20px;
+        }
+    </style>
