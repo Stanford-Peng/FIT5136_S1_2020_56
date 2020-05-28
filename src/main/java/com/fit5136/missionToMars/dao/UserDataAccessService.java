@@ -8,8 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Period;
-import java.time.ZoneId;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -167,7 +166,7 @@ public class UserDataAccessService implements UserDao{
                 .ifPresent(array -> {
                     if (String.join("", Arrays.copyOfRange(array, 3, array.length))
                             .equals("")){
-                        userDb.add(new Candidate(Integer.parseInt(array[0]), array[1], array[2], null));
+                        userDb.add(new Candidate(Long.parseLong(array[0]), array[1], array[2], null));
                     }
                     else {
                         Date date = new Date();

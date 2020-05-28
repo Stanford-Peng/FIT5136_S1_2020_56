@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/candidateLogin")
-    public long candidateLogin(@RequestBody User user){
-        return service.candidateLogin(user.getUserName(), user.getPassword());
+    public long candidateLogin(@RequestBody Candidate candidate){
+        return service.candidateLogin(candidate.getUserName(), candidate.getPassword());
     }
 }
