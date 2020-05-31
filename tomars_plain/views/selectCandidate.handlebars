@@ -1,0 +1,55 @@
+<body>
+    <h3 style="text-align: center;">Select Candidate</h3>
+<div>
+<button class="negativeBtn" onclick="location.href='/mission/admin/{{mission.id}}';">Back</button>
+{{#each mission.empReq}}
+<div>
+    <label>Title: </label>
+    <span>{{@key}}</span>
+    <label>Number: </label>
+    <span>{{this}}</span>
+
+    <button>Find best candidates</button>
+</div>
+
+{{/each}}
+<div id = "result"> 
+    
+</div>
+<style>
+
+        button {
+        background-color: white;
+        color: black;
+        cursor: pointer;
+    }
+
+    .positiveBtn {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 14px 20px;
+        display: block;
+        margin: auto;
+        width: 20%;
+        font-size: larger;
+    }
+
+    .negativeBtn {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 14px 20px;
+        width: 10%;
+        display: inline-block;
+        font-size: larger;
+        margin-left: 80%;
+
+    }
+
+    button:hover {
+        opacity: 0.8;
+    }
+</style>
+</>
+</body>

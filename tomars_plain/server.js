@@ -370,6 +370,20 @@ app.get("/mission/:missionId/shuttle/:shuttleId", function (req, res) {
 
 })
 
+app.get("/mission/:missionId/candidate",function(req,res){
+    console.log(req.params);
+    if (!req.session["admin"]) {
+        res.redirect("/administrator");
+    } else {
+        axios.get("http://localhost:8080/api/mission/" + req.params['missionId']).then(function (response) {
+            console.log(response.data);
+            res.render("selectCandidate", { "layout": null, "mission": response.data})
+        }).catch(error => {
+            console.log(error);
+        });
+    }
+})
+
 app.get("/coordinatorHome", function (req, res) {
     if (!req.session["coordinator"]) {
         res.redirect("/coordinator");
