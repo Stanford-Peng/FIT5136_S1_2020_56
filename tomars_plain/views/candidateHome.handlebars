@@ -47,6 +47,24 @@
                   {{/if}}
                 </span>
 
+                <label for="postal">Postal: </label>
+                <span name="postal">
+                  {{#if user.profile.postal}}
+                    {{user.profile.postal}}
+                  {{else}}
+                      null
+                  {{/if}}
+                </span>
+
+                <label for="country">Country: </label>
+                <span name="country">
+                  {{#if user.profile.country}}
+                    {{user.profile.country}}
+                  {{else}}
+                      null
+                  {{/if}}
+                </span>
+
                 <label for="idNumber">ID Number: </label>
                 <span name="idNumber">
                   {{#if user.profile.idNumber}}

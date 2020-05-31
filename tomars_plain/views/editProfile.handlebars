@@ -5,7 +5,7 @@
                 <legend>Profile</legend>
                 <div>
                 <label for="name">name: </label>
-                <input type="text" name="manufactureYear" value="{{user.profile.name}}">
+                <input type="text" name="name" value="{{user.profile.name}}">
 
                 <label for="dob">Date of birth: </label>
                 <input type="date" name="dob" required value="{{#if user.profile.dob}}{{cut user.profile.dob 10}}{{/if}}">
@@ -17,8 +17,17 @@
 
                 <label for="city">Address City: </label>
                 <input type="text" name="city" value="{{user.profile.city}}">
+                </div>
+
+                <div>
+                <label for="postal">Postal: </label>
+                <input type="text" name="postal" value="{{user.profile.postal}}">
+
+                <label for="country">Country: </label>
+                <input type="text" name="country" value="{{user.profile.country}}">
 
                 </div>
+
                 <div>
                 <label for="idNo">ID Number: </label>
                 <input type="text" name="idNo" value="{{user.profile.idNumber}}">
@@ -28,14 +37,14 @@
                 </div>
 
                 <div>
-                <label for="gender" value="{{user.profile.gender}}">Gender: </label>
-                <select name="gender" >
+                <label for="gender" >Gender: </label>
+                <select name="gender" value="{{user.profile.gender}}" >
                     <option>male</option>
                     <option>female</option>
                     <option>other</option>                   
                 </select>
 
-                <label for="allergies">Allergies: </label>
+                <label for="allergies">Allergies(separate by commas): </label>
                 <input type="text" name="allergies" value="{{user.profile.allergies}}">
                 </div>
 
@@ -43,16 +52,16 @@
                 <label for="foodPref">Food Preference: </label>
                 <input type="text" name="foodPref" value="{{user.profile.foodPref}}">
 
-                <label for="qualifications">Qualifications: </label>
+                <label for="qualifications">Qualifications(separate by commas): </label>
                 <input type="text" name="qualifications" value="{{user.profile.qualifications}}">
                 </div>
 
                 <div>
 
                 <label for="workExp">Work Experience(Year): </label>
-                <input type="number" name="workExp" value="{{user.profile.workExp}}">
+                <input type="number" name="workExp" value="{{user.profile.workExp}}" min="0">
 
-                <label for="occupations">Occupations: </label>
+                <label for="occupations">Occupations(separate by commas): </label>
                 <input type="text" name="occupations" value="{{user.profile.occupations}}">
                 </div>
 
@@ -60,8 +69,8 @@
                 <label for="computerSkill">Computer Skills: </label>
                 <input type="text" name="computerSkill" value="{{user.profile.computerSkill}}">
 
-                <label for="languages">Languages: </label>
-                <input type="text" name="computerSkill" value="{{user.profile.languages}}">
+                <label for="languages">Languages(separate by commas): </label>
+                <input type="text" name="languages" value="{{user.profile.languages}}">
                 </div>
             </fieldset>
         </form>
@@ -71,7 +80,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
         //alert("hello");
-        $("select[name='missionStatus'] option:contains('{{user.profile.gender}}')").prop('selected', "selected");
+        $("select[name='gender'] option:contains('{{user.profile.gender}}')").prop('selected', "selected");
         //$("#origin").val("{{mission.origin}}");
     }
     )
