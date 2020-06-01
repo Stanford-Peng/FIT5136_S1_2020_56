@@ -2,10 +2,11 @@
   <div id="box">
     <span>Welcome! {{user.userName}}</span>
     <button class="negativeBtn" onclick="location.href='/candidateLogout';">Log out</button>
-    <button class="positiveBtn" onclick="location.href='/message';">Message</button>
+    {{#if user.profile}}
     <button class="positiveBtn" onclick="location.href='/editProfile';">Edit Profile</button>
+    {{/if}}
   </div>
-
+  {{#if user.profile}}
   <div id="profile">
     <fieldset>
                 <legend>Profile</legend>
@@ -164,6 +165,13 @@
             </fieldset>
 
   </div>
+  {{else}}
+    <fieldset>
+      <legend>Profile</legend>
+        <button class="positiveBtn" onclick="location.href='/editProfile';">Create Profile</button>
+    </fieldset>
+  {{/if}}
+
   <style>
     .positiveBtn {
       background-color: #4CAF50;

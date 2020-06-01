@@ -326,7 +326,8 @@ app.post("/editProfile", function (req, res) {
         body["languages"] = [req.body.languages];
         axios.put("http://localhost:8080/api/user/setProfile/" + req.session["candidate"], body).then(function(response){
             if(!response.data){
-            res.redirect("/candidateHome");
+                res.send("Edit successfully ,<a href='/candidateHome'>Back to home</a>");
+            //res.redirect("/candidateHome");
             } else{
                 res.send("Oops something wrong, <a href='/candidateHome'>Back to home</a>");
             }
@@ -536,9 +537,11 @@ app.post("/putMission/:missionId", function (req, res) {
         axios.put("http://localhost:8080/api/mission/" + req.params['missionId'], mission).then(function (response) {
             console.log(response.data);
             if (req.session["admin"]) {
-                res.redirect("/mission/admin/" + req.params['missionId']);
+                res.send("Edit successfully, <a href='/administrator'>Click to go to home</a>");
+                //res.redirect("/mission/admin/" + req.params['missionId']);
             } else {
-                res.redirect("/mission/coordinator/" + req.params['missionId']);
+                res.send("Edit successfully, <a href='/coordinator'>Click to go to home</a>");
+                //res.redirect("/mission/coordinator/" + req.params['missionId']);
             }
         }
         ).catch(error => {
