@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Repository("userDao")
 public class UserDataAccessService implements UserDao{
@@ -122,22 +123,39 @@ public class UserDataAccessService implements UserDao{
     }
 
     @Override
-    public List<Long> findQualifiedCandidates(Criteria criteria, Mission mission) {
-      /*  userDb.stream().filter(c -> c.getProfile() != null
-                && Period.between(new Date().toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate(), c.getProfile().getDob().toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate()).getYears() >= criteria.getMinAge()
-                && Period.between(new Date().toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate(), c.getProfile().getDob().toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate()).getYears() <= criteria.getMaxAge()
-                &&
-
-        );*/
-        return null;
+    public List<Candidate> findQualifiedCandidates(Criteria criteria, Mission mission) {
+        List<Candidate> candidates = userDb.stream()
+                .filter(candidate -> candidate.getProfile() != null)
+                .collect(Collectors.toList());
+        List<Candidate> qualifiedCandidates = new ArrayList<>();
+        candidates.forEach(c -> {
+            Calendar calendar = Calendar
+                    .getInstance();
+            calendar.setTime(c.getProfile().getDob());
+            int age = Calendar
+                    .getInstance()
+                    .get(Calendar.YEAR)
+                    - calendar.get(Calendar.YEAR);
+            int exp = IntStream.of(c.getProfile().getWorkExp()).sum();
+            if (age >= criteria.getMinAge() && age <= criteria.getMaxAge()
+            && exp >= criteria.getWorkExp()
+            && c.getProfile().getCriminalRecord().getCrimes().size() == 0
+            && c.getProfile().getHealthRecord().getHealthIssues().size() == 0
+            && Arrays.asList(c.getProfile().getOccupations()).contains(criteria.getOccupations())
+            && Arrays.asList(c.getProfile().getLanguages()).contains(criteria.getLanguages())
+            && !Collections
+                    .disjoint(Arrays.asList(c.getProfile().getQualifications())
+                            , Arrays.asList(criteria.getQualifications()))){
+                qualifiedCandidates.add(c);
+            }
+        });
+        List<Candidate> sorted = qualifiedCandidates.stream()
+                .sorted(Comparator.comparing(c ->
+                        IntStream.of(c.getProfile().getWorkExp()).sum()))
+                .limit(mission.getEmpReq().values().stream().mapToInt(i -> i).sum())
+                .collect(Collectors.toList());
+        Collections.reverse(sorted);
+        return sorted;
     }
 
     @Override

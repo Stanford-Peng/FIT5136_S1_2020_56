@@ -70,9 +70,8 @@ public class Criteria {
         maxAge = 45;
         qualifications = new String[]{"MBA", "MIT", "BS"};
         workExp = 3;
-        occupations = new String[]{"manufacturer", "designer", "builder","electrical engineer",
-                "developer"};
+        occupations = new String[]{"developer"};
         computerSkill = "intermediate";
-        languages = new String[]{"English", "Mandarin", "French", "Japanese", "Spanish"};
+        languages = new String[]{"English", "Mandarin"};
     }
 }

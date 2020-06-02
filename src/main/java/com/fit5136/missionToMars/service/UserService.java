@@ -3,10 +3,7 @@ package com.fit5136.missionToMars.service;
 import com.fit5136.missionToMars.dao.UserDao;
 import com.fit5136.missionToMars.exception.DuplicateUserNameException;
 import com.fit5136.missionToMars.exception.UnknownUserIdException;
-import com.fit5136.missionToMars.model.Candidate;
-import com.fit5136.missionToMars.model.CriminalRecord;
-import com.fit5136.missionToMars.model.HealthRecord;
-import com.fit5136.missionToMars.model.Profile;
+import com.fit5136.missionToMars.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -54,5 +51,8 @@ public class UserService {
     public int hasDuplicateUsername(String username){ return userDao.hasDuplicateUsername(username); }
     public long candidateLogin(String userName, String password){
         return userDao.candidateLogin(userName, password);
+    }
+    public List<Candidate> findBest(Mission mission, Criteria criteria){
+        return userDao.findQualifiedCandidates(criteria, mission);
     }
 }

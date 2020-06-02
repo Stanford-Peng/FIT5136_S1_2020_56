@@ -1,12 +1,11 @@
 package com.fit5136.missionToMars.api;
 
-import com.fit5136.missionToMars.model.Candidate;
-import com.fit5136.missionToMars.model.Profile;
-import com.fit5136.missionToMars.model.User;
+import com.fit5136.missionToMars.model.*;
 import com.fit5136.missionToMars.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
 import java.util.List;
 
 @RestController
@@ -57,5 +56,10 @@ public class UserController {
     @PostMapping(path = "/candidateLogin")
     public long candidateLogin(@RequestBody Candidate candidate){
         return service.candidateLogin(candidate.getUserName(), candidate.getPassword());
+    }
+
+    @PostMapping(path = "/findBest")
+    public List<Candidate> findBest(@RequestBody Mission mission){
+        return service.findBest(mission, new Criteria());
     }
 }
