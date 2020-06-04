@@ -1,54 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BranchesTreeState">
-    <expand>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </expand>
-    <select />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="833e68af-d588-4ede-8a2e-818a2628836e" name="Default Changelist" comment="">
-<<<<<<< Updated upstream
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fit5136/missionToMars/dao/UserDataAccessService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fit5136/missionToMars/dao/UserDataAccessService.java" afterDir="false" />
-=======
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tomars_plain/public/mars.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tomars_plain/public/mars2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_attoparser_attoparser_2_0_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_thymeleaf_2_2_6_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_extras_thymeleaf_extras_java8time_3_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_thymeleaf_3_0_11_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_thymeleaf_spring5_3_0_11_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_unbescape_unbescape_1_1_6_RELEASE.xml" beforeDir="false" />
+    <list default="true" id="615e115d-ee95-42e8-9944-b4c5c80ef306" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/missionToMars.iml" beforeDir="false" afterPath="$PROJECT_DIR$/missionToMars.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/missionToMars_jar/missionToMars.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/missionToMars_jar/missionToMars.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fit5136/missionToMars/dao/UserDataAccessService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fit5136/missionToMars/dao/UserDataAccessService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/candidateData.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/candidateData.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/missionToMars.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/candidateData.csv" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/candidateData.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/missionData.csv" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/missionData.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/shuttleData.csv" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/shuttleData.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tomars_plain/public/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/tomars_plain/public/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tomars_plain/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/tomars_plain/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tomars_plain/views/administrator.handlebars" beforeDir="false" afterPath="$PROJECT_DIR$/tomars_plain/views/administrator.handlebars" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tomars_plain/views/candidate.handlebars" beforeDir="false" afterPath="$PROJECT_DIR$/tomars_plain/views/candidate.handlebars" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tomars_plain/views/layouts/adminBar.handlebars" beforeDir="false" afterPath="$PROJECT_DIR$/tomars_plain/views/layouts/adminBar.handlebars" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tomars_plain/views/register.handlebars" beforeDir="false" afterPath="$PROJECT_DIR$/tomars_plain/views/register.handlebars" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tomars_plain/views/selectCandidate.handlebars" beforeDir="false" afterPath="$PROJECT_DIR$/tomars_plain/views/selectCandidate.handlebars" afterDir="false" />
->>>>>>> Stashed changes
+      <change beforePath="$PROJECT_DIR$/target/classes/candidateData.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fit5136/missionToMars/dao/UserDataAccessService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fit5136/missionToMars/dao/UserDataAccessService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +43,7 @@
   <component name="ProjectId" id="1aFSIQtTy5jTavW0Wg3xdd2LTGP" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -92,7 +52,6 @@
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
     <property name="RequestMappingsPanelWidth1" value="75" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -185,29 +144,13 @@
       <workItem from="1590581233967" duration="137000" />
       <workItem from="1590644499441" duration="328000" />
       <workItem from="1590645239462" duration="1023000" />
-<<<<<<< Updated upstream
       <workItem from="1591078222469" duration="5774000" />
-      <workItem from="1591234885298" duration="1670000" />
-=======
-      <workItem from="1591078222469" duration="4726000" />
-      <workItem from="1591232431733" duration="1462000" />
->>>>>>> Stashed changes
+      <workItem from="1591234885298" duration="2153000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
+    <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
     <state x="734" y="355" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590418524506">
@@ -240,110 +183,54 @@
     </state>
     <state x="-575" y="743" key="FileChooserDialogImpl/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1588780913314" />
     <state x="1196" y="553" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1586416109814" />
-<<<<<<< Updated upstream
-    <state width="1037" height="556" key="GridCell.Tab.0.bottom" timestamp="1591236666366">
+    <state width="1037" height="577" key="GridCell.Tab.0.bottom" timestamp="1591244243554">
       <screen x="-1080" y="0" width="1080" height="1880" />
-=======
-    <state width="1358" height="291" key="GridCell.Tab.0.bottom" timestamp="1591234948493">
-      <screen x="0" y="23" width="1440" height="822" />
->>>>>>> Stashed changes
     </state>
-    <state width="1037" height="556" key="GridCell.Tab.0.bottom/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591236666366" />
+    <state width="1037" height="577" key="GridCell.Tab.0.bottom/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591244243554" />
     <state width="2517" height="399" key="GridCell.Tab.0.bottom/0.0.2560.1400/-1080.0.1080.1880@0.0.2560.1400" timestamp="1590419895983" />
     <state width="1814" height="216" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1586426818732" />
-<<<<<<< Updated upstream
-    <state width="1037" height="556" key="GridCell.Tab.0.center" timestamp="1591236666366">
+    <state width="1037" height="577" key="GridCell.Tab.0.center" timestamp="1591244243554">
       <screen x="-1080" y="0" width="1080" height="1880" />
-=======
-    <state width="1358" height="113" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1591234794685" />
-    <state width="1358" height="291" key="GridCell.Tab.0.bottom/0.23.1440.822@0.23.1440.822" timestamp="1591234948493" />
-    <state width="1358" height="291" key="GridCell.Tab.0.center" timestamp="1591234948492">
-      <screen x="0" y="23" width="1440" height="822" />
->>>>>>> Stashed changes
     </state>
-    <state width="1037" height="556" key="GridCell.Tab.0.center/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591236666366" />
+    <state width="1037" height="577" key="GridCell.Tab.0.center/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591244243554" />
     <state width="2517" height="399" key="GridCell.Tab.0.center/0.0.2560.1400/-1080.0.1080.1880@0.0.2560.1400" timestamp="1590419895983" />
     <state width="1814" height="216" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1586426818731" />
-<<<<<<< Updated upstream
-    <state width="1037" height="556" key="GridCell.Tab.0.left" timestamp="1591236666366">
+    <state width="1037" height="577" key="GridCell.Tab.0.left" timestamp="1591244243554">
       <screen x="-1080" y="0" width="1080" height="1880" />
-=======
-    <state width="1358" height="113" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1591234794684" />
-    <state width="1358" height="291" key="GridCell.Tab.0.center/0.23.1440.822@0.23.1440.822" timestamp="1591234948492" />
-    <state width="1358" height="291" key="GridCell.Tab.0.left" timestamp="1591234948492">
-      <screen x="0" y="23" width="1440" height="822" />
->>>>>>> Stashed changes
     </state>
-    <state width="1037" height="556" key="GridCell.Tab.0.left/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591236666366" />
+    <state width="1037" height="577" key="GridCell.Tab.0.left/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591244243554" />
     <state width="2517" height="399" key="GridCell.Tab.0.left/0.0.2560.1400/-1080.0.1080.1880@0.0.2560.1400" timestamp="1590419895982" />
     <state width="1814" height="216" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1586426818731" />
-<<<<<<< Updated upstream
-    <state width="1037" height="556" key="GridCell.Tab.0.right" timestamp="1591236666366">
+    <state width="1037" height="577" key="GridCell.Tab.0.right" timestamp="1591244243554">
       <screen x="-1080" y="0" width="1080" height="1880" />
-=======
-    <state width="1358" height="113" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1591234794684" />
-    <state width="1358" height="291" key="GridCell.Tab.0.left/0.23.1440.822@0.23.1440.822" timestamp="1591234948492" />
-    <state width="1358" height="291" key="GridCell.Tab.0.right" timestamp="1591234948493">
-      <screen x="0" y="23" width="1440" height="822" />
->>>>>>> Stashed changes
     </state>
-    <state width="1037" height="556" key="GridCell.Tab.0.right/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591236666366" />
+    <state width="1037" height="577" key="GridCell.Tab.0.right/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591244243554" />
     <state width="2517" height="399" key="GridCell.Tab.0.right/0.0.2560.1400/-1080.0.1080.1880@0.0.2560.1400" timestamp="1590419895983" />
     <state width="1814" height="216" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1586426818731" />
-<<<<<<< Updated upstream
-    <state width="1037" height="556" key="GridCell.Tab.1.bottom" timestamp="1591236666366">
+    <state width="1037" height="577" key="GridCell.Tab.1.bottom" timestamp="1591244243554">
       <screen x="-1080" y="0" width="1080" height="1880" />
-=======
-    <state width="1358" height="113" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1591234794685" />
-    <state width="1358" height="291" key="GridCell.Tab.0.right/0.23.1440.822@0.23.1440.822" timestamp="1591234948493" />
-    <state width="1358" height="291" key="GridCell.Tab.1.bottom" timestamp="1591234948494">
-      <screen x="0" y="23" width="1440" height="822" />
->>>>>>> Stashed changes
     </state>
-    <state width="1037" height="556" key="GridCell.Tab.1.bottom/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591236666366" />
+    <state width="1037" height="577" key="GridCell.Tab.1.bottom/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591244243554" />
     <state width="2517" height="399" key="GridCell.Tab.1.bottom/0.0.2560.1400/-1080.0.1080.1880@0.0.2560.1400" timestamp="1590419895983" />
     <state width="1814" height="216" key="GridCell.Tab.1.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1586426818732" />
-<<<<<<< Updated upstream
-    <state width="1037" height="556" key="GridCell.Tab.1.center" timestamp="1591236666366">
+    <state width="1037" height="577" key="GridCell.Tab.1.center" timestamp="1591244243554">
       <screen x="-1080" y="0" width="1080" height="1880" />
-=======
-    <state width="1358" height="113" key="GridCell.Tab.1.bottom/0.23.1440.821@0.23.1440.821" timestamp="1591234794686" />
-    <state width="1358" height="291" key="GridCell.Tab.1.bottom/0.23.1440.822@0.23.1440.822" timestamp="1591234948494" />
-    <state width="1358" height="291" key="GridCell.Tab.1.center" timestamp="1591234948493">
-      <screen x="0" y="23" width="1440" height="822" />
->>>>>>> Stashed changes
     </state>
-    <state width="1037" height="556" key="GridCell.Tab.1.center/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591236666366" />
+    <state width="1037" height="577" key="GridCell.Tab.1.center/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591244243554" />
     <state width="2517" height="399" key="GridCell.Tab.1.center/0.0.2560.1400/-1080.0.1080.1880@0.0.2560.1400" timestamp="1590419895983" />
     <state width="1814" height="216" key="GridCell.Tab.1.center/0.0.2560.1400@0.0.2560.1400" timestamp="1586426818732" />
-<<<<<<< Updated upstream
-    <state width="1037" height="556" key="GridCell.Tab.1.left" timestamp="1591236666366">
+    <state width="1037" height="577" key="GridCell.Tab.1.left" timestamp="1591244243554">
       <screen x="-1080" y="0" width="1080" height="1880" />
-=======
-    <state width="1358" height="113" key="GridCell.Tab.1.center/0.23.1440.821@0.23.1440.821" timestamp="1591234794686" />
-    <state width="1358" height="291" key="GridCell.Tab.1.center/0.23.1440.822@0.23.1440.822" timestamp="1591234948493" />
-    <state width="1358" height="291" key="GridCell.Tab.1.left" timestamp="1591234948493">
-      <screen x="0" y="23" width="1440" height="822" />
->>>>>>> Stashed changes
     </state>
-    <state width="1037" height="556" key="GridCell.Tab.1.left/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591236666366" />
+    <state width="1037" height="577" key="GridCell.Tab.1.left/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591244243554" />
     <state width="2517" height="399" key="GridCell.Tab.1.left/0.0.2560.1400/-1080.0.1080.1880@0.0.2560.1400" timestamp="1590419895983" />
     <state width="1814" height="216" key="GridCell.Tab.1.left/0.0.2560.1400@0.0.2560.1400" timestamp="1586426818732" />
-<<<<<<< Updated upstream
-    <state width="1037" height="556" key="GridCell.Tab.1.right" timestamp="1591236666366">
+    <state width="1037" height="577" key="GridCell.Tab.1.right" timestamp="1591244243554">
       <screen x="-1080" y="0" width="1080" height="1880" />
-=======
-    <state width="1358" height="113" key="GridCell.Tab.1.left/0.23.1440.821@0.23.1440.821" timestamp="1591234794685" />
-    <state width="1358" height="291" key="GridCell.Tab.1.left/0.23.1440.822@0.23.1440.822" timestamp="1591234948493" />
-    <state width="1358" height="291" key="GridCell.Tab.1.right" timestamp="1591234948494">
-      <screen x="0" y="23" width="1440" height="822" />
->>>>>>> Stashed changes
     </state>
-    <state width="1037" height="556" key="GridCell.Tab.1.right/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591236666366" />
+    <state width="1037" height="577" key="GridCell.Tab.1.right/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591244243554" />
     <state width="2517" height="399" key="GridCell.Tab.1.right/0.0.2560.1400/-1080.0.1080.1880@0.0.2560.1400" timestamp="1590419895983" />
     <state width="1814" height="216" key="GridCell.Tab.1.right/0.0.2560.1400@0.0.2560.1400" timestamp="1586426818732" />
-    <state width="1358" height="113" key="GridCell.Tab.1.right/0.23.1440.821@0.23.1440.821" timestamp="1591234794686" />
-    <state width="1358" height="291" key="GridCell.Tab.1.right/0.23.1440.822@0.23.1440.822" timestamp="1591234948494" />
     <state width="1814" height="268" key="GridCell.Tab.2.bottom" timestamp="1586421954360">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -404,5 +291,9 @@
       <screen x="-1080" y="0" width="1080" height="1880" />
     </state>
     <state x="-877" y="435" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1589955543048" />
+    <state x="-818" y="851" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1591243717788">
+      <screen x="-1080" y="0" width="1080" height="1880" />
+    </state>
+    <state x="-818" y="851" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.0.2560.1400/-1080.0.1080.1880@-1080.0.1080.1880" timestamp="1591243717788" />
   </component>
 </project>

@@ -138,6 +138,10 @@ public class UserDataAccessService implements UserDao{
                     .get(Calendar.YEAR)
                     - calendar.get(Calendar.YEAR);
             int exp = IntStream.of(c.getProfile().getWorkExp()).sum();
+            List<String> languages = Arrays.asList(c.getProfile().getLanguages());
+            languages.replaceAll(String::toLowerCase);
+            List<String> requiredLanguage = Arrays.asList(criteria.getLanguages());
+            requiredLanguage.replaceAll(String::toLowerCase);
             if (
                     age >= criteria.getMinAge() && age <= criteria.getMaxAge()
             && exp >= criteria.getWorkExp()
@@ -147,8 +151,7 @@ public class UserDataAccessService implements UserDao{
                     && c.getProfile().getHealthRecord().getHealthIssues().get(0).isEmpty())
             && Arrays.asList(c.getProfile().getOccupations())
                             .containsAll(Arrays.asList(criteria.getOccupations()))
-            && Arrays.asList(c.getProfile().getLanguages())
-                            .containsAll(Arrays.asList(criteria.getLanguages()))
+            && languages.containsAll(requiredLanguage)
             && !Collections
                     .disjoint(Arrays.asList(c.getProfile().getQualifications())
                             , Arrays.asList(criteria.getQualifications()))
