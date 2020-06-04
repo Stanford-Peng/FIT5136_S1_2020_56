@@ -52,7 +52,7 @@ public class UserService {
     public long candidateLogin(String userName, String password){
         return userDao.candidateLogin(userName, password);
     }
-    public List<Candidate> findBest(Mission mission, Criteria criteria){
-        return userDao.findQualifiedCandidates(criteria, mission);
+    public List<Candidate> findBest(String occupation, int num, Criteria criteria){
+        return userDao.findQualifiedCandidates(criteria, occupation, num);
     }
 }

@@ -58,8 +58,9 @@ public class UserController {
         return service.candidateLogin(candidate.getUserName(), candidate.getPassword());
     }
 
-    @PostMapping(path = "/findBest")
-    public List<Candidate> findBest(@RequestBody Mission mission){
-        return service.findBest(mission, new Criteria());
+    @PostMapping(path = "/findBest/{occupation}")
+    public List<Candidate> findBest(@RequestBody Integer num,
+                                    @PathVariable("occupation") String occupation){
+        return service.findBest(occupation, num, new Criteria());
     }
 }

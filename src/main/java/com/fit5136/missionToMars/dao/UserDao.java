@@ -14,6 +14,6 @@ public interface UserDao {
     void setProfile(long id, Profile profile);
     void changePassword(long id, String password);
     int hasDuplicateUsername(String username);
-    List<Candidate> findQualifiedCandidates(Criteria criteria, Mission mission);
+    List<Candidate> findQualifiedCandidates(Criteria criteria, String occupation, int num);
     long candidateLogin(String userName, String password);
 }

@@ -123,7 +123,7 @@ public class UserDataAccessService implements UserDao{
     }
 
     @Override
-    public List<Candidate> findQualifiedCandidates(Criteria criteria, Mission mission) {
+    public List<Candidate> findQualifiedCandidates(Criteria criteria, String occupation, int num) {
         sync();
         List<Candidate> candidates = userDb.stream()
                 .filter(candidate -> candidate.getProfile() != null)
@@ -150,7 +150,7 @@ public class UserDataAccessService implements UserDao{
             && (c.getProfile().getHealthRecord().getHealthIssues().size() < 2
                     && c.getProfile().getHealthRecord().getHealthIssues().get(0).isEmpty())
             && Arrays.asList(c.getProfile().getOccupations())
-                            .containsAll(Arrays.asList(criteria.getOccupations()))
+                            .contains(occupation)
             && languages.containsAll(requiredLanguage)
             && !Collections
                     .disjoint(Arrays.asList(c.getProfile().getQualifications())
@@ -162,7 +162,7 @@ public class UserDataAccessService implements UserDao{
         List<Candidate> sorted = qualifiedCandidates.stream()
                 .sorted(Comparator.comparing(c ->
                         IntStream.of(c.getProfile().getWorkExp()).sum()))
-                .limit(mission.getEmpReq().values().stream().mapToInt(i -> i).sum())
+                .limit(num)
                 .collect(Collectors.toList());
         Collections.reverse(sorted);
         return sorted;
