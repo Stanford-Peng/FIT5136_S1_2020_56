@@ -11,20 +11,39 @@
 
     <div id="login">
         <h3>Candidate</h3>
-        <form method="post" action="/signin">
-
+        <form >
             <label for="username"><b>Username: </b></label>
             <input type="text" name="username" placeholder="login">
 
 
             <label for="password"><b>Password: </b></label>
             <input type="password" name="password" placeholder="password">
-
-            <button class="positiveBtn" type="submit">Log in</button>
         </form>
+            <button class="positiveBtn" id="signin">Log in</button>
+        
         <button class="negativeBtn" onclick="location.href='/'">Back to Login Portal</button>
         <a href="/register">Do not have an account/Go to Register</a>
     </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+<script type="text/javascript">
+    $("#signin").click(function(){
+        //alert("signin");
+        var username = $("input[name='username']").val();
+        var password = $("input[name='password']").val();
+        //alert(password);
+        var passHash = CryptoJS.MD5(password).toString();
+        $.post("/signin", {"username":username,"password":passHash},function(data){
+            if(data["success"]==="true"){
+                alert("Sign in successfully");
+                window.location.href = "/candidateHome";
+            }else{
+                alert("Credentials incorrect");
+            }
+        });
+    });
+    //method="post" action="/signin"
+</script>
 
 </body>
 

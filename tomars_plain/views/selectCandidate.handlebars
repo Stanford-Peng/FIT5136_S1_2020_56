@@ -9,7 +9,7 @@
     <label>Number: </label>
     <span>{{this}}</span>
 
-    <button>Find best candidates</button>
+    <button class="find">Find best candidates</button>
 </div>
 
 {{/each}}
@@ -51,5 +51,15 @@
         opacity: 0.8;
     }
 </style>
-</>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+result=$("#result");
+select = $(".find");
+select.click(function(){
+    $.get("/findBest/"+{{mission.id}},function(data){
+        result.text(data);
+    });
+
+})
+</script>
 </body>

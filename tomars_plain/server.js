@@ -247,16 +247,17 @@ app.post("/signin", function (req, res) {
         "userId": 3
     }
     axios.post("http://localhost:8080/api/user/candidateLogin", body).then(function (response) {
-        console.log(response.data);
+        //console.log(response.data);
         if (response.data !== -1) {
             req.session["candidate"] = response.data;
-            res.redirect("/candidateHome");
+            //res.redirect("/candidateHome");
+            res.json({ "success": "true" });
 
         }
-        else {
-            //req.flash("Fail");
-            res.send("Password or username incorrect, <a href='/candidate'>Click to go to log in</a>");
-        }
+        // else {
+        //     //req.flash("Fail");
+        //     res.send("Password or username incorrect, <a href='/candidate'>Click to go to log in</a>");
+        // }
     }).catch(function (error) {
         console.log(error);
     })
@@ -267,7 +268,7 @@ app.get("/candidateHome", function (req, res) {
     if (!req.session["candidate"]) {
         res.redirect("/candidate");
     } else {
-        //console.log(req.session["candidate"]);
+        console.log(req.session["candidate"]);
         axios.get("http://localhost:8080/api/user/" + req.session["candidate"]).then(
             function (response) {
                 res.render("candidateHome", { layout: null, "user": response.data });
@@ -383,6 +384,28 @@ app.get("/mission/:missionId/candidate",function(req,res){
             console.log(error);
         });
     }
+})
+
+app.get("/findBest/:missionId", function (req, res) {
+    console.log(req.params);
+    if (!req.session["admin"]) {
+        res.redirect("/administrator");
+    } else {
+        axios.get("http://localhost:8080/api/mission/" + req.params['missionId']).then(function (response) {
+            axios.post("http://localhost:8080/api/user/findBest", response.data).then(
+                function(result){
+                    console.log(result);
+                    //res.json(result);
+                }
+            ).catch(error => {
+                console.log(error);
+            });
+        }).catch(error => {
+            console.log(error);
+        });
+
+    }
+
 })
 
 app.get("/coordinatorHome", function (req, res) {
