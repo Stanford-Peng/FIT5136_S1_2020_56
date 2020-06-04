@@ -18,7 +18,7 @@ public class HealthRecord {
         this.healthIssues = healthIssues;
     }
 
-    public HealthRecord(@JsonProperty("healthRecord") List<String> healthIssues) {
+    public HealthRecord(@JsonProperty("healthIssues") List<String> healthIssues) {
         this.healthIssues = healthIssues;
     }
 

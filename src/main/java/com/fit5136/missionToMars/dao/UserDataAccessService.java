@@ -124,6 +124,7 @@ public class UserDataAccessService implements UserDao{
 
     @Override
     public List<Candidate> findQualifiedCandidates(Criteria criteria, Mission mission) {
+        sync();
         List<Candidate> candidates = userDb.stream()
                 .filter(candidate -> candidate.getProfile() != null)
                 .collect(Collectors.toList());
@@ -137,15 +138,19 @@ public class UserDataAccessService implements UserDao{
                     .get(Calendar.YEAR)
                     - calendar.get(Calendar.YEAR);
             int exp = IntStream.of(c.getProfile().getWorkExp()).sum();
-            if (age >= criteria.getMinAge() && age <= criteria.getMaxAge()
+            if (
+                    age >= criteria.getMinAge() && age <= criteria.getMaxAge()
             && exp >= criteria.getWorkExp()
-            && c.getProfile().getCriminalRecord().getCrimes().size() == 0
-            && c.getProfile().getHealthRecord().getHealthIssues().size() == 0
-            && Arrays.asList(c.getProfile().getOccupations()).contains(criteria.getOccupations())
-            && Arrays.asList(c.getProfile().getLanguages()).contains(criteria.getLanguages())
+           // && c.getProfile().getCriminalRecord().getCrimes().size() < 2
+            && c.getProfile().getHealthRecord().getHealthIssues().size() < 2
+            && Arrays.asList(c.getProfile().getOccupations())
+                            .containsAll(Arrays.asList(criteria.getOccupations()))
+            && Arrays.asList(c.getProfile().getLanguages())
+                            .containsAll(Arrays.asList(criteria.getLanguages()))
             && !Collections
                     .disjoint(Arrays.asList(c.getProfile().getQualifications())
-                            , Arrays.asList(criteria.getQualifications()))){
+                            , Arrays.asList(criteria.getQualifications()))
+        ){
                 qualifiedCandidates.add(c);
             }
         });
