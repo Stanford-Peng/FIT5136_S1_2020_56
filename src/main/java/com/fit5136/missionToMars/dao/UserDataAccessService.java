@@ -141,8 +141,10 @@ public class UserDataAccessService implements UserDao{
             if (
                     age >= criteria.getMinAge() && age <= criteria.getMaxAge()
             && exp >= criteria.getWorkExp()
-           // && c.getProfile().getCriminalRecord().getCrimes().size() < 2
-            && c.getProfile().getHealthRecord().getHealthIssues().size() < 2
+            && (c.getProfile().getCriminalRecord().getCrimes().size() < 2
+                    && c.getProfile().getCriminalRecord().getCrimes().get(0).isEmpty())
+            && (c.getProfile().getHealthRecord().getHealthIssues().size() < 2
+                    && c.getProfile().getHealthRecord().getHealthIssues().get(0).isEmpty())
             && Arrays.asList(c.getProfile().getOccupations())
                             .containsAll(Arrays.asList(criteria.getOccupations()))
             && Arrays.asList(c.getProfile().getLanguages())
