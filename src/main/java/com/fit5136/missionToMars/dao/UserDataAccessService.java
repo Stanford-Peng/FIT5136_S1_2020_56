@@ -179,6 +179,7 @@ public class UserDataAccessService implements UserDao{
     @Override
     //Return the userID, return -1 if credential is wrong
     public long candidateLogin(String userName, String password) {
+        sync();
         Optional<Candidate> optional = userDb.stream().filter(c -> c.getUserName().equals(userName)
                 && c.getPassword().equals(password))
                 .findFirst();
