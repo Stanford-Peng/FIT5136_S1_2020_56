@@ -132,7 +132,7 @@ app.get("/adminHome", function (req, res) {
         var missions = [];
         axios.get("http://localhost:8080/api/mission").then(function (response) {
             //alert("Data: " + response + "\nStatus: ");
-            console.log(response.data);
+            //console.log(response.data);
             //response = JSON.parse(response);
             for (item of response.data) {
 
@@ -253,6 +253,9 @@ app.post("/signin", function (req, res) {
             //res.redirect("/candidateHome");
             res.json({ "success": "true" });
 
+        }
+        else{
+            res.json({ "success": "false" });
         }
         // else {
         //     //req.flash("Fail");
@@ -394,6 +397,7 @@ app.get("/findBest/:missionId", function (req, res) {
         axios.get("http://localhost:8080/api/mission/" + req.params['missionId']).then(function (response) {
             axios.post("http://localhost:8080/api/user/findBest", response.data).then(
                 function(result){
+                    console.log(response.data);
                     console.log(result);
                     //res.json(result);
                 }

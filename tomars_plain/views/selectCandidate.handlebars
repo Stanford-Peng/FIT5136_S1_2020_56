@@ -56,7 +56,9 @@
 result=$("#result");
 select = $(".find");
 select.click(function(){
+    alert("hh");
     $.get("/findBest/"+{{mission.id}},function(data){
+        
         result.text(data);
     });
 
