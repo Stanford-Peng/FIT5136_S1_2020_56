@@ -1,67 +1,102 @@
 <body>
-    <h3 style="text-align: center;">Select Candidate</h3>
-<div>
-<button class="negativeBtn" onclick="location.href='/mission/admin/{{mission.id}}';">Back</button>
-{{#each mission.empReq}}
-<div>
-    <label>Title: </label>
-    <span>{{@key}}</span>
-    <label>Number: </label>
-    <span>{{this}}</span>
+    <h3 style="text-align: center;">Select Candidate for {{mission.missionName}}</h3>
+    <div>
+        <button class="negativeBtn" onclick="location.href='/mission/admin/{{mission.id}}';">Back</button>
+        {{#each mission.empReq}}
+        <div class="position">
+            <label>Title: </label>
+            <span>{{@key}}</span>
+            <label>Number: </label>
+            <span>{{this}}</span>
+            <button class="find" onclick="find($(this))">Find best candidates</button>
+        </div>
+        {{/each}}
+        <div id="result">
 
-    <button class="find">Find best candidates</button>
-</div>
-
-{{/each}}
-<div id = "result"> 
-    
-</div>
-<style>
-
+        </div>
+    </div>
+    <style>
         button {
-        background-color: white;
-        color: black;
-        cursor: pointer;
-    }
+            background-color: white;
+            color: black;
+            cursor: pointer;
+        }
 
-    .positiveBtn {
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        padding: 14px 20px;
-        display: block;
-        margin: auto;
-        width: 20%;
-        font-size: larger;
-    }
+        .positiveBtn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            display: block;
+            margin: auto;
+            width: 20%;
+            font-size: larger;
+        }
 
-    .negativeBtn {
-        background-color: red;
-        color: white;
-        border: none;
-        padding: 14px 20px;
-        width: 10%;
-        display: inline-block;
-        font-size: larger;
-        margin-left: 80%;
+        .negativeBtn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            width: 10%;
+            display: inline-block;
+            font-size: larger;
+            margin-left: 80%;
 
-    }
+        }
 
-    button:hover {
-        opacity: 0.8;
-    }
-</style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
-result=$("#result");
-select = $(".find");
-select.click(function(){
-    alert("hh");
-    $.get("/findBest/"+{{mission.id}},function(data){
-        
-        result.text(data);
-    });
+        button:hover {
+            opacity: 0.8;
+        }
 
-})
-</script>
+        .inlineBtn{
+            margin:20px;
+        }
+
+        .position{
+
+            margin:25px 50px 75px 100px;
+
+        }
+
+        #result{
+            border-style: solid;
+            border-width: 1px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        result = $("#result");
+        //select = $(".find");
+        function find(self){
+            var occupation = self.parent().children("span:nth-child(2)").text();
+            var number = self.prev().text();
+            //alert(occupation);
+            $.get("/findBest/" + occupation + "/"+ number, function (data) {
+                result.empty();
+                for (item of data.candidates) {
+                    console.log(item.profile.name);
+                    result.append("<div>" +item.userId +"."+ item.profile.name
+                         + "<button class='inlineBtn' onclick='addCandidate(" + item.userId +")' >Select</button>" 
+                         + "</div>");
+                }
+            });
+
+        }
+
+        function addCandidate(userId){
+            var r = confirm("Are you sure?");
+            if (r == true) {
+                $.get("/selectCandidate/{{mission.id}}/" + userId, function(data){
+                    if(data["success"]=="true"){
+                        alert("Successful!")
+                    }
+                    else{
+                        alert("Failed");
+                    }
+                });
+            } 
+        }
+
+    </script>
 </body>

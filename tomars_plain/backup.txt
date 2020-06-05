@@ -176,3 +176,32 @@ console.log(typeof($("input[name='username']").val()))
             margin: 20px;
         }
     </style>
+
+
+                axios.post("http://localhost:8080/api/user/findBest", response.data).then(
+                function(result){
+                    console.log(response.data);
+                    console.log(result);
+                    //res.json(result);
+                }
+            ).catch(error => {
+                console.log(error);
+            });
+
+                    select.click(function () {
+            var occupation = this.parent("div").children("span:nth-child(2)").text();
+            var number = this.prev().text();
+            alert(number);
+            $.get("/findBest/" + occupation + "/"+ number, function (data) {
+                result.empty();
+                for (item of data.candidates) {
+                    console.log(item.profile.name);
+                    result.append("<div>" + item.profile.name + "</div>");
+                }
+            });
+
+})
+
+
++ "<a href='/candidate/profile/" + item.userId +"'>" 
++"</a>"

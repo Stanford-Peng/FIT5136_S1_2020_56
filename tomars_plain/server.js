@@ -88,7 +88,7 @@ app.get("/coordinator", function (req, res) {
 })
 
 app.post("/adminLogin", function (req, res) {
-    //console.log(req.body);
+
     var username = req.body['username'];
     var password = req.body['password'];
     if (username == "admin" && password == "admin") {
@@ -100,8 +100,6 @@ app.post("/adminLogin", function (req, res) {
         res.send("Incorrect username or password, <a href='/administrator'>Click to go back</a> ");
         res.end();
     }
-    //console.log(req.session);
-    // console.log(req.session["admin"]);
 })
 
 app.post("/coordinatorLogin", function (req, res) {
@@ -117,9 +115,6 @@ app.post("/coordinatorLogin", function (req, res) {
         res.send("Incorrect username or password, <a href='/coordinator'>Click to go back</a> ");
         res.end();
     }
-    //  console.log(req.session);
-    //  console.log(req.session["id"]);
-    //  console.log(req.session["coordinator"]);
 })
 
 
@@ -131,25 +126,19 @@ app.get("/adminHome", function (req, res) {
     } else {
         var missions = [];
         axios.get("http://localhost:8080/api/mission").then(function (response) {
-            //alert("Data: " + response + "\nStatus: ");
-            //console.log(response.data);
-            //response = JSON.parse(response);
             for (item of response.data) {
 
                 //var mission=JSON.parse(item);
-                console.log(item);
+                // console.log(item);
                 missions.push(item);
 
             };
             res.render("adminHome", { layout: "adminBar", 'missions': missions });
-            console.log("missions:" + missions);
+            //console.log("missions:" + missions);
         }).catch(error => {
             console.log(error)
         })
     }
-    // console.log(req.session["admin"]);
-    // console.log(req.session["coordinator"]);
-    // console.log(req.session["id"]);
 })
 
 
@@ -175,7 +164,6 @@ app.get("/mission/:id/shuttle/", function (req, res) {
         res.redirect("/administrator");
     } else {
         var missionId = req.params['id'];
-        //missionId["id"] = 
         var shuttles = [];
         console.log(missionId);
         axios.get("http://localhost:8080/api/shuttle").then(function (response) {
@@ -389,21 +377,54 @@ app.get("/mission/:missionId/candidate",function(req,res){
     }
 })
 
-app.get("/findBest/:missionId", function (req, res) {
+app.get("/findBest/:occupation/:number", function (req, res) {
     console.log(req.params);
     if (!req.session["admin"]) {
         res.redirect("/administrator");
     } else {
-        axios.get("http://localhost:8080/api/mission/" + req.params['missionId']).then(function (response) {
-            axios.post("http://localhost:8080/api/user/findBest", response.data).then(
-                function(result){
-                    console.log(response.data);
-                    console.log(result);
-                    //res.json(result);
-                }
-            ).catch(error => {
-                console.log(error);
-            });
+        var config = {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            responseType: 'text'
+        };
+        axios.post("http://localhost:8080/api/user/findBest/" + req.params['occupation'], req.params['number'],config).then(function (response) {
+            //console.log(response.data);
+            var candidates = {"candidates": response.data};
+            console.log(candidates);
+            res.json(candidates);
+
+        }).catch(error => {
+            console.log(error);
+        });
+
+    }
+
+})
+
+app.get("/selectCandidate/:missionId/:candidateId",function(req,res){
+    if (!req.session["admin"]) {
+        res.redirect("/administrator");
+    } else {
+        console.log(req.params['candidateId']);
+        var config = {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            responseType: 'text'
+        };
+        axios.put("http://localhost:8080/api/mission/selectCandidates/" + req.params['missionId'], [req.params['candidateId']],config).then(function (response) {
+            console.log(response.data);
+            if(response.data)
+            {
+                res.json({"success":"false"});
+            }
+            else{
+                res.json({"success":"true"});
+
+            }
+            //res.json(candidates);
+
         }).catch(error => {
             console.log(error);
         });
@@ -419,25 +440,22 @@ app.get("/coordinatorHome", function (req, res) {
         var missions = [];
         axios.get("http://localhost:8080/api/mission").then(function (response) {
             //alert("Data: " + response + "\nStatus: ");
-            console.log(response.data);
+            //console.log(response.data);
             //response = JSON.parse(response);
             for (item of response.data) {
 
                 //var mission=JSON.parse(item);
-                console.log(item);
+                //console.log(item);
                 missions.push(item);
 
             };
             res.render("coordinatorHome", { layout: "coordinatorBar", 'missions': missions });
-            console.log("missions:" + missions);
+            //console.log("missions:" + missions);
         }).catch(error => {
             console.log(error)
         })
 
     };
-    // console.log(req.session["admin"]);
-    // console.log(req.session["coordinator"]);
-    // console.log(req.session["id"]);
 })
 
 app.get("/adminLogout", function (req, res) {
@@ -471,14 +489,14 @@ app.get("/editMission/:missionId", function (req, res) {
         res.sendFile(path.join(__dirname, 'index.html'));
     } else if (req.session["admin"]) {
         axios.get("http://localhost:8080/api/mission/" + req.params['missionId']).then(function (response) {
-            console.log(response.data);
+            //console.log(response.data);
             res.render("editMission", { "layout": "editMissionBar", "mission": response.data, "who": req.session["admin"] })
         }).catch(error => {
             console.log(error);
         });
     } else {
         axios.get("http://localhost:8080/api/mission/" + req.params['missionId']).then(function (response) {
-            console.log(response.data);
+            //console.log(response.data);
             res.render("editMission", { "layout": "editMissionBar", "mission": response.data, "who": req.session["coordinator"] });
         }).catch(error => {
             console.log(error);
