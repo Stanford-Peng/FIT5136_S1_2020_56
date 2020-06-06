@@ -74,11 +74,15 @@
             //alert(occupation);
             $.get("/findBest/" + occupation + "/"+ number, function (data) {
                 result.empty();
-                for (item of data.candidates) {
-                    console.log(item.profile.name);
-                    result.append("<div>" +item.userId +"."+ item.profile.name
-                         + "<button class='inlineBtn' onclick='addCandidate(" + item.userId +")' >Select</button>" 
-                         + "</div>");
+                if(data.candidates.length>0){
+                    for (item of data.candidates) {
+                        console.log(item.profile.name);
+                        result.append("<div>" +item.userId +"."+ item.profile.name
+                            + "<button class='inlineBtn' onclick='addCandidate(" + item.userId +")' >Select</button>" 
+                            + "</div>");
+                    }
+                } else{
+                    result.append("<h3>No suitable candidate found!</h3>");
                 }
             });
 
