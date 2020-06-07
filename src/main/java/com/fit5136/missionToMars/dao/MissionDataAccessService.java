@@ -84,6 +84,9 @@ public class MissionDataAccessService implements MissionDao {
     public int selectCandidates(long id, List<Long> candidates) {
         Optional<Mission> optional = findById(id);
         optional.ifPresent(m ->{
+            List<Long> list =
+                    m.getCandidates() == null ? new ArrayList<>() : m.getCandidates();
+            candidates.addAll(list);
             m.setCandidates(candidates);
             updateById(id, m);
         });
