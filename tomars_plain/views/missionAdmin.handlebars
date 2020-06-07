@@ -178,10 +178,26 @@
             <span name="shuttle">
                 {{#if mission.shuttleId}}
                 {{mission.shuttleId}}
+                {{else}}
+                    Not selected yet.
                 {{/if}}
             </span>
 
         </div>
+
+        <div>
+            <label for="candidate">Selected Candidate Id: </label>
+            <span name="candidate">
+                {{#if mission.candidates}}
+                    {{mission.candidates}}
+                {{else}}
+                    null
+                {{/if}}
+            </span>
+
+        </div>
+
+
 
     </div>
     {{!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> --}}
