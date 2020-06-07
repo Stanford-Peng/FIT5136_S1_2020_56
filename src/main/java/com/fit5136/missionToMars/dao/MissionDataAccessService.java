@@ -115,7 +115,7 @@ public class MissionDataAccessService implements MissionDao {
             }
             List<Long> candidates = new ArrayList<>();
             String[] cans = array[17].split(", ");
-            if (cans.length > 1) {
+            if (cans.length > 0) {
                 for (String c : cans) {
                     candidates.add(Long.parseLong(c));
                 }
