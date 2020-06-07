@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="615e115d-ee95-42e8-9944-b4c5c80ef306" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/missionToMars_jar/missionToMars.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/missionToMars_jar/missionToMars.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/candidateData.csv" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/candidateData.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/missionData.csv" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/missionData.csv" afterDir="false" />
-    </list>
+    <list default="true" id="615e115d-ee95-42e8-9944-b4c5c80ef306" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -148,6 +143,7 @@
       <workItem from="1591428128647" duration="1394000" />
       <workItem from="1591508595369" duration="608000" />
       <workItem from="1591519286921" duration="1406000" />
+      <workItem from="1591521959392" duration="223000" />
     </task>
     <servers />
   </component>
